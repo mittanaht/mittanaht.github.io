@@ -300,6 +300,75 @@ footer{
   display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
   margin-top:18px;font:9px var(--mono);color:var(--muted);
 }
+
+/* 从 v7 移植：游戏档案弹窗专属样式 */
+.game-modal{width:min(100%,850px)}
+.game-modal .modal-intro{max-width:650px}
+.game-modal .ruleline{height:1px;background:var(--line);margin:19px 0}
+.game-modal .tag-row{display:flex;flex-wrap:wrap;gap:7px;margin:12px 0}
+.game-modal .tag{
+  border:1px solid var(--line);padding:4px 8px;color:var(--mint);
+  font:9px var(--mono);letter-spacing:.06em;
+}
+.game-modal .game-list{
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;
+}
+.game-modal .game-card{
+  padding:14px;border:1px solid var(--line);
+  background:rgba(4,13,19,.42);
+}
+.game-modal .game-card h4{margin:0 0 6px;font-size:13px}
+.game-modal .game-card p{margin:0;font-size:11px}
+.game-modal .game-card .game-type{
+  color:var(--mint);font:9px var(--mono);
+  letter-spacing:.1em;margin-bottom:7px;
+}
+.game-modal .server-panel{
+  padding:17px;border:1px solid var(--line);
+  background:rgba(4,13,19,.5);margin-top:13px;
+}
+.game-modal .server-panel h4{
+  margin:0 0 10px;color:var(--mint);
+  font:10px var(--mono);letter-spacing:.14em;
+}
+.game-modal .connect-row{
+  display:flex;justify-content:space-between;align-items:center;
+  gap:10px;padding:9px 0;border-top:1px solid rgba(143,255,224,.1);
+}
+.game-modal .connect-row code{
+  font-size:12px;color:var(--text);overflow-wrap:anywhere;
+}
+.game-modal .server-note{font-size:11px;color:var(--muted);margin-top:10px}
+.game-modal .info-grid{
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;
+}
+.game-modal .info-cell{
+  padding:12px;border:1px solid var(--line);
+  background:rgba(4,13,19,.42);
+}
+.game-modal .info-cell .k{
+  color:var(--muted);font:9px var(--mono);letter-spacing:.12em;
+}
+.game-modal .info-cell .v{font-size:12px;margin-top:4px}
+.game-modal .game-copy-btn{padding:7px 11px;font-size:10px}
+
+/* 从 v7 移植：电影施工中卡片，使用 v6 原有粉色 */
+.movie-file{
+  border:1px solid var(--line);padding:20px;
+  background:linear-gradient(135deg,rgba(143,255,224,.06),rgba(8,15,21,.4));
+  margin-top:18px;
+}
+.movie-file .classified{
+  color:var(--pink);font:10px var(--mono);letter-spacing:.18em;
+}
+.movie-file .big{
+  color:var(--pink);font:clamp(19px,4vw,28px) var(--mono);
+  letter-spacing:.08em;margin:15px 0;
+}
+.movie-file p{
+  margin:0;color:var(--muted);font-size:12px;line-height:1.9;
+}
+
 #topBtn{
   position:fixed;right:25px;bottom:25px;width:40px;height:40px;
   border:1px solid var(--line);background:#101b22;color:var(--mint);
@@ -333,6 +402,8 @@ footer{
   .player-main{grid-template-columns:125px 1fr;gap:16px}
   .player-controls{gap:8px;flex-wrap:wrap}
   .listen-btn{padding:10px}
+  .game-modal{padding:25px 19px}
+  .game-modal .game-list{grid-template-columns:1fr}
 }
 @media(max-width:430px){
   .directory-grid{grid-template-columns:1fr}
@@ -341,6 +412,9 @@ footer{
   .player-info{text-align:center}
   .player-controls{justify-content:center}
   .track{grid-template-columns:25px 1fr auto;padding:12px 10px}
+  .game-modal .info-grid{grid-template-columns:1fr}
+  .game-modal .connect-row{align-items:flex-start;flex-direction:column}
+  .game-modal .connect-row .btn{width:100%}
 }
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{scroll-behavior:auto!important;animation:none!important;transition:none!important}
@@ -474,7 +548,7 @@ footer{
 </footer>
 </div>
 
-<!-- 普通目录弹窗 -->
+<!-- 普通目录弹窗：保留 v6 原版，游戏和电影改用各自独立弹窗 -->
 <div class="modal-backdrop" id="folderModal" aria-hidden="true">
   <div class="modal" role="dialog" aria-modal="true">
     <button class="modal-close" data-close="folderModal">✕</button>
@@ -557,7 +631,138 @@ footer{
   </div>
 </div>
 
-<!-- CP品味弹窗 -->
+<!-- 游戏档案弹窗：移植自 v7 -->
+<div class="modal-backdrop" id="gameModal" aria-hidden="true">
+  <div class="modal game-modal" role="dialog" aria-modal="true" aria-labelledby="gameTitle">
+    <button class="modal-close" data-close="gameModal">✕ CLOSE</button>
+    <div class="modal-tag">DIRECTORY / 02 — GAME ARCHIVE</div>
+    <h3 id="gameTitle">游戏履历</h3>
+    <p class="modal-intro">涉猎很广，什么都玩。或者更准确地说，曾经什么都玩。</p>
+    <div class="tag-row">
+      <span class="tag">VARIOUS GENRES</span>
+      <span class="tag">ON &amp; OFF</span>
+      <span class="tag">PERSONAL ARCHIVE</span>
+    </div>
+    <div class="game-list">
+      <div class="game-card">
+        <div class="game-type">01 / MAIN GAME</div>
+        <h4>VALORANT · 无畏契约</h4>
+        <p>尚勃勒专精，也玩幽影和幻棱。游戏 ID：尚虫虫。</p>
+      </div>
+      <div class="game-card">
+        <div class="game-type">02 / SANDBOX</div>
+        <h4>MINECRAFT · 我的世界</h4>
+        <p>生电玩家。自己开了一个公开生存服务器，服务器档案见下方。</p>
+      </div>
+      <div class="game-card">
+        <div class="game-type">03 / INDIE</div>
+        <h4>UNDERTALE · 传说之下</h4>
+        <p>一款玩过的独立游戏。</p>
+      </div>
+      <div class="game-card">
+        <div class="game-type">04 / STRATEGY</div>
+        <h4>KARDS</h4>
+        <p>我是戈林。我的意思是，我不会打。</p>
+      </div>
+      <div class="game-card">
+        <div class="game-type">05 / WISHLIST</div>
+        <h4>DETROIT: BECOME HUMAN</h4>
+        <p>早就想玩了，可惜苹果电脑暂时玩不了。先放进愿望清单。</p>
+      </div>
+    </div>
+
+    <div class="ruleline"></div>
+
+    <div class="server-panel">
+      <div class="modal-tag">MINECRAFT / SERVER ARCHIVE</div>
+      <h3 style="margin-top:8px">午夜繁星服务器</h3>
+      <p style="margin-top:0">MITTANAHT'S SERVER · PUBLIC SERVER</p>
+      <p>从 2026 年 3 月开始运营。一个以生存为主的公开 Minecraft 服务器。</p>
+      <div class="tag-row">
+        <span class="tag">JAVA × BEDROCK</span>
+        <span class="tag">PLUGIN SERVER</span>
+        <span class="tag">SURVIVAL</span>
+        <span class="tag">REDSTONE</span>
+      </div>
+      <div class="info-grid">
+        <div class="info-cell">
+          <div class="k">VERSION</div>
+          <div class="v">1.21 – 1.21.11</div>
+        </div>
+        <div class="info-cell">
+          <div class="k">SERVER CORE</div>
+          <div class="v">1.21.10</div>
+        </div>
+        <div class="info-cell">
+          <div class="k">BASE PACK</div>
+          <div class="v">基于 ZeroNight 整合包修改</div>
+        </div>
+        <div class="info-cell">
+          <div class="k">GAMEPLAY</div>
+          <div class="v">生存为主</div>
+        </div>
+      </div>
+
+      <div class="server-panel">
+        <h4>SERVER NOTES</h4>
+        <p style="margin:0">拥有插件与一个炫酷的出生点。服务器内有一些生电机器，大多数由服主亲自建造。Java 版与 Bedrock 版互通。</p>
+        <p class="server-note">不鼓励大型生电机器与外挂。建议低调发展红石，避免卡服。</p>
+      </div>
+
+      <div class="server-panel">
+        <h4>CONNECTION / JAVA EDITION</h4>
+        <div class="connect-row">
+          <code>play.simpfun.cn:22549</code>
+          <button class="btn game-copy-btn copy-btn" data-copy="play.simpfun.cn:22549">COPY ADDRESS</button>
+        </div>
+        <h4 style="margin-top:13px">CONNECTION / BEDROCK EDITION</h4>
+        <div class="connect-row">
+          <code>play.simpfun.cn</code>
+          <button class="btn game-copy-btn copy-btn" data-copy="play.simpfun.cn">COPY ADDRESS</button>
+        </div>
+        <div class="server-note">PORT / 22549</div>
+      </div>
+
+      <div class="server-panel">
+        <h4>BASIC RULES</h4>
+        <p style="margin:0">
+          01 / QQ 群内名字改成你的游戏 ID。<br>
+          02 / 使用木锄圈地。<br>
+          03 / 圈地后输入 <code>/dom create [名字]</code> 创建领地。<br>
+          04 / 传送使用 <code>/tpa</code>，前往领地使用 <code>/dom tp</code>。<br>
+          05 / 禁止破坏他人建筑。<br>
+          06 / 禁止伤害服务器的行为，尤其是恶意 TNT 轰炸。
+        </p>
+        <p class="server-note">遇到恶意行为，可以用领地插件保护自己的建筑。有问题先看公告，再问群主，群主人还行。至少到现在还没把谁变成猪（？</p>
+      </div>
+
+      <div class="server-panel">
+        <h4>QQ COMMUNITY</h4>
+        <div class="connect-row">
+          <code>1083052624</code>
+          <button class="btn game-copy-btn copy-btn" data-copy="1083052624">COPY GROUP ID</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 电影施工中弹窗：移植自 v7 -->
+<div class="modal-backdrop" id="movieModal" aria-hidden="true">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="movieTitle">
+    <button class="modal-close" data-close="movieModal">✕ CLOSE</button>
+    <div class="modal-tag">DIRECTORY / 03 — FILM ARCHIVE</div>
+    <h3 id="movieTitle">电影</h3>
+    <p>Some birds aren't meant to be caged.</p>
+    <div class="movie-file">
+      <div class="classified">ARCHIVE STATUS / UNDER CONSTRUCTION</div>
+      <div class="big">COMING SOON_</div>
+      <p>这里以后放喜欢的电影、导演、台词，或者一些看完之后久久没缓过来的东西。</p>
+    </div>
+  </div>
+</div>
+
+<!-- CP品味弹窗：保留 v6 原版 -->
 <div class="modal-backdrop" id="cpModal" aria-hidden="true">
   <div class="modal cp-modal" role="dialog" aria-modal="true">
     <button class="modal-close" data-close="cpModal">✕</button>
@@ -744,6 +949,8 @@ const folderInfo={
 };
 const folderModal=document.getElementById('folderModal');
 const musicModal=document.getElementById('musicModal');
+const gameModal=document.getElementById('gameModal');
+const movieModal=document.getElementById('movieModal');
 const cpModal=document.getElementById('cpModal');
 
 document.querySelectorAll('.directory').forEach(card=>{
@@ -751,6 +958,14 @@ document.querySelectorAll('.directory').forEach(card=>{
     const folder=card.dataset.folder;
     if(folder==='音乐'){
       openModal(musicModal);
+      return;
+    }
+    if(folder==='游戏'){
+      openModal(gameModal);
+      return;
+    }
+    if(folder==='电影'){
+      openModal(movieModal);
       return;
     }
     if(folder==='CP品味'){
@@ -830,21 +1045,22 @@ document.getElementById('helloBtn').addEventListener('click',()=>{
   openModal(document.getElementById('contactModal'));
 });
 
-/* QQ 和抖音复制按钮 */
+/* QQ、抖音和游戏档案复制按钮 */
 document.querySelectorAll('.copy-btn').forEach(btn=>{
   btn.addEventListener('click',async()=>{
     const value=btn.dataset.copy;
+    const originalText=btn.textContent;
     try{
       await navigator.clipboard.writeText(value);
       btn.textContent='COPIED ✓';
       btn.classList.add('copied');
       setTimeout(()=>{
-        btn.textContent='COPY';
+        btn.textContent=originalText;
         btn.classList.remove('copied');
       },1600);
     }catch(error){
       btn.textContent='SELECT TEXT';
-      setTimeout(()=>btn.textContent='COPY',1600);
+      setTimeout(()=>btn.textContent=originalText,1600);
     }
   });
 });
