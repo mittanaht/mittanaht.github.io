@@ -49,6 +49,39 @@ nav{
   min-height:650px;display:grid;grid-template-columns:1.2fr .8fr;
   align-items:center;gap:50px;padding:80px 0 100px;
 }
+
+/* 实时时钟 */
+.live-clock{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin-bottom:22px;
+  font-family:var(--mono);
+}
+.clock-label{
+  color:var(--muted);
+  font-size:10px;
+  letter-spacing:.16em;
+}
+.clock-time{
+  color:var(--mint);
+  font-size:17px;
+  letter-spacing:.12em;
+  font-variant-numeric:tabular-nums;
+  text-shadow:0 0 14px rgba(143,255,224,.28);
+}
+.clock-dot{
+  width:6px;
+  height:6px;
+  background:var(--mint);
+  border-radius:50%;
+  box-shadow:0 0 10px var(--mint);
+  animation:clockPulse 1.5s infinite;
+}
+@keyframes clockPulse{
+  50%{opacity:.3;box-shadow:0 0 2px var(--mint)}
+}
+
 .hero h1{
   font-size:clamp(58px,9vw,108px);line-height:.94;
   letter-spacing:-.075em;margin:0 0 30px;font-weight:850;
@@ -227,6 +260,13 @@ footer{
 <header class="hero">
   <div class="reveal">
     <div class="hero-tag"></div>
+
+    <div class="live-clock">
+      <span class="clock-dot"></span>
+      <span class="clock-label">LOCAL TIME</span>
+      <span class="clock-time" id="liveTime">00:00:00</span>
+    </div>
+
     <h1>HELLO,<br><span class="glow">STRANGER.</span></h1>
     <p class="lead">这里是互联网的一个野生角落。<br>没写什么正经介绍，我懒。随便逛逛吧，反正我也拦不住你。</p>
     <div class="hero-actions">
@@ -378,6 +418,20 @@ footer{
 <button id="topBtn" aria-label="回到顶部">↑</button>
 
 <script>
+/* 实时时钟 */
+function updateClock(){
+  const now=new Date();
+  const time=now.toLocaleTimeString('en-GB',{
+    hour:'2-digit',
+    minute:'2-digit',
+    second:'2-digit',
+    hour12:false
+  });
+  document.getElementById('liveTime').textContent=time;
+}
+updateClock();
+setInterval(updateClock,1000);
+
 /* 星空背景 */
 const canvas=document.getElementById('stars');
 const ctx=canvas.getContext('2d');
