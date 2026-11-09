@@ -49,39 +49,17 @@ nav{
   min-height:650px;display:grid;grid-template-columns:1.2fr .8fr;
   align-items:center;gap:50px;padding:80px 0 100px;
 }
-
-/* 实时时钟 */
-.live-clock{
-  display:flex;
-  align-items:center;
-  gap:12px;
-  margin-bottom:22px;
-  font-family:var(--mono);
-}
-.clock-label{
-  color:var(--muted);
-  font-size:10px;
-  letter-spacing:.16em;
-}
+.live-clock{display:flex;align-items:center;gap:12px;margin-bottom:22px;font-family:var(--mono)}
+.clock-label{color:var(--muted);font-size:10px;letter-spacing:.16em}
 .clock-time{
-  color:var(--mint);
-  font-size:17px;
-  letter-spacing:.12em;
-  font-variant-numeric:tabular-nums;
-  text-shadow:0 0 14px rgba(143,255,224,.28);
+  color:var(--mint);font-size:17px;letter-spacing:.12em;
+  font-variant-numeric:tabular-nums;text-shadow:0 0 14px rgba(143,255,224,.28);
 }
 .clock-dot{
-  width:6px;
-  height:6px;
-  background:var(--mint);
-  border-radius:50%;
-  box-shadow:0 0 10px var(--mint);
-  animation:clockPulse 1.5s infinite;
+  width:6px;height:6px;background:var(--mint);border-radius:50%;
+  box-shadow:0 0 10px var(--mint);animation:clockPulse 1.5s infinite;
 }
-@keyframes clockPulse{
-  50%{opacity:.3;box-shadow:0 0 2px var(--mint)}
-}
-
+@keyframes clockPulse{50%{opacity:.3;box-shadow:0 0 2px var(--mint)}}
 .hero h1{
   font-size:clamp(58px,9vw,108px);line-height:.94;
   letter-spacing:-.075em;margin:0 0 30px;font-weight:850;
@@ -145,7 +123,9 @@ section{padding:80px 0;border-top:1px solid var(--line)}
 #terminalCursor{display:inline-block;animation:blink .8s steps(2,start) infinite}
 @keyframes blink{to{visibility:hidden}}
 #terminalEasterEgg{color:var(--pink)}
-.directory-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}
+
+/* 首页目录 */
+.directory-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:15px}
 .directory{
   min-height:225px;padding:23px;border:1px solid var(--line);
   background:linear-gradient(145deg,rgba(18,31,39,.9),rgba(10,17,24,.9));
@@ -177,13 +157,16 @@ footer{
   display:flex;justify-content:space-between;gap:15px;flex-wrap:wrap;
   color:var(--muted);font:10px var(--mono);letter-spacing:.1em;
 }
+
+/* 通用弹窗 */
 .modal-backdrop{
   position:fixed;inset:0;z-index:20;background:rgba(1,6,10,.78);
   backdrop-filter:blur(10px);display:none;place-items:center;padding:20px;
 }
 .modal-backdrop.open{display:grid;animation:fadeIn .2s}
 .modal{
-  width:min(100%,490px);padding:32px;border:1px solid rgba(143,255,224,.3);
+  width:min(100%,490px);max-height:90vh;overflow-y:auto;padding:32px;
+  border:1px solid rgba(143,255,224,.3);
   background:#0d171e;box-shadow:0 25px 90px #000;position:relative;
   animation:modalIn .25s;
 }
@@ -191,7 +174,7 @@ footer{
 @keyframes modalIn{from{transform:translateY(12px) scale(.98)}to{transform:none}}
 .modal-close{
   position:absolute;right:18px;top:17px;background:none;border:0;
-  color:var(--muted);font-size:19px;cursor:pointer;
+  color:var(--muted);font-size:19px;cursor:pointer;z-index:2;
 }
 .modal-tag{font:10px var(--mono);color:var(--mint);letter-spacing:.15em}
 .modal h3{font-size:29px;margin:15px 0}
@@ -212,6 +195,111 @@ footer{
 }
 .contact-action:hover{background:var(--mint);color:#07110f}
 .contact-action.copied{color:var(--pink);border-color:var(--pink)}
+
+/* 音乐档案播放器 */
+.music-modal{width:min(100%,720px);padding:34px}
+.music-intro{color:#aab9b9;font-size:13px;line-height:2;margin:8px 0 24px}
+.music-player{
+  border:1px solid var(--line);
+  background:linear-gradient(145deg,rgba(18,34,40,.96),rgba(8,15,21,.98));
+  padding:22px;
+}
+.player-main{display:grid;grid-template-columns:190px 1fr;gap:25px;align-items:center}
+.album-art{
+  aspect-ratio:1;position:relative;overflow:hidden;display:grid;place-items:center;
+  background:radial-gradient(circle at 35% 30%,rgba(143,255,224,.35),transparent 35%),
+  linear-gradient(145deg,#294b4b,#101b26 65%,#070d12);
+  border:1px solid rgba(143,255,224,.25);
+}
+.album-art::before,.album-art::after{
+  content:"";position:absolute;border:1px solid rgba(143,255,224,.25);
+  border-radius:50%;width:70%;aspect-ratio:1;
+}
+.album-art::after{width:48%;border-color:rgba(143,255,224,.16)}
+.art-disc{
+  width:42%;aspect-ratio:1;border-radius:50%;
+  background:repeating-radial-gradient(circle,#0b1115 0 3px,#1b2b30 4px 5px);
+  border:1px solid rgba(143,255,224,.35);z-index:1;
+  display:grid;place-items:center;
+}
+.art-disc span{
+  width:23%;aspect-ratio:1;border-radius:50%;background:var(--mint);
+  box-shadow:0 0 18px rgba(143,255,224,.5);
+}
+.art-index{
+  position:absolute;left:12px;top:12px;font:9px var(--mono);
+  color:rgba(229,240,239,.75);letter-spacing:.14em;
+}
+.player-info{min-width:0}
+.player-label{font:10px var(--mono);color:var(--mint);letter-spacing:.15em}
+.player-title{font-size:clamp(20px,4vw,27px);line-height:1.25;margin:12px 0 7px;overflow-wrap:anywhere}
+.player-artist{font-size:13px;color:#a7b7b9}
+.player-album{font:10px var(--mono);color:var(--muted);margin-top:15px}
+.player-controls{display:flex;align-items:center;gap:12px;margin-top:23px}
+.control-btn{
+  width:38px;height:38px;border:1px solid var(--line);border-radius:50%;
+  background:rgba(143,255,224,.04);color:var(--mint);cursor:pointer;transition:.2s;
+  display:grid;place-items:center;font-size:16px;
+}
+.control-btn:hover{background:var(--mint);color:#07110f}
+.listen-btn{
+  display:inline-flex;align-items:center;justify-content:center;
+  padding:11px 14px;border:1px solid var(--mint);background:var(--mint);
+  color:#07110f;font:10px var(--mono);letter-spacing:.1em;font-weight:700;
+  cursor:pointer;transition:.2s;
+}
+.listen-btn:hover{box-shadow:0 0 22px rgba(143,255,224,.25);transform:translateY(-2px)}
+.player-note{font-size:10px;color:var(--muted);line-height:1.7;margin-top:15px}
+.track-heading{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  margin:26px 0 10px;font:10px var(--mono);color:var(--mint);letter-spacing:.13em;
+}
+.track-list{border:1px solid var(--line)}
+.track{
+  width:100%;display:grid;grid-template-columns:32px 1fr auto;gap:12px;
+  align-items:center;text-align:left;padding:13px 14px;
+  border:0;border-bottom:1px solid rgba(143,255,224,.09);
+  background:transparent;color:var(--text);cursor:pointer;transition:.2s;
+}
+.track:last-child{border-bottom:0}
+.track:hover{background:rgba(143,255,224,.055)}
+.track.active{background:rgba(143,255,224,.09)}
+.track-number{font:10px var(--mono);color:var(--muted)}
+.track.active .track-number{color:var(--mint)}
+.track-name{font-size:12px;font-weight:600;display:block}
+.track-artist{font-size:10px;color:var(--muted);display:block;margin-top:4px}
+.track-state{font:9px var(--mono);color:var(--mint);letter-spacing:.08em}
+.cloud-link{
+  display:flex;align-items:center;justify-content:space-between;gap:15px;
+  margin-top:16px;padding:15px;border:1px solid var(--line);
+  background:rgba(143,255,224,.035);transition:.2s;
+}
+.cloud-link:hover{border-color:rgba(143,255,224,.5);background:rgba(143,255,224,.07)}
+.cloud-label{font:9px var(--mono);color:var(--muted);letter-spacing:.12em}
+.cloud-name{font-size:13px;color:var(--text);margin-top:5px}
+.cloud-arrow{color:var(--mint);font:14px var(--mono)}
+
+/* CP品味档案 */
+.cp-modal{width:min(100%,620px)}
+.cp-subtitle{
+  color:var(--mint);font:11px var(--mono);letter-spacing:.08em;
+  margin:0 0 24px!important;
+}
+.cp-file{
+  border:1px solid var(--line);padding:22px;
+  background:linear-gradient(145deg,rgba(22,34,42,.75),rgba(8,15,21,.8));
+}
+.cp-stamp{
+  display:inline-block;border:1px solid rgba(255,142,184,.55);
+  color:var(--pink);font:9px var(--mono);letter-spacing:.15em;
+  padding:6px 9px;transform:rotate(-2deg);margin-bottom:17px;
+}
+.cp-file h4{font:17px var(--mono);color:var(--text);margin:0 0 10px}
+.cp-file p{margin:0;color:var(--muted);font-size:12px;line-height:1.9}
+.cp-bottom{
+  display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
+  margin-top:18px;font:9px var(--mono);color:var(--muted);
+}
 #topBtn{
   position:fixed;right:25px;bottom:25px;width:40px;height:40px;
   border:1px solid var(--line);background:#101b22;color:var(--mint);
@@ -226,6 +314,10 @@ footer{
   box-shadow:0 0 9px var(--mint);animation:particleFade .7s forwards;
 }
 @keyframes particleFade{to{opacity:0;transform:translate(var(--dx),var(--dy)) scale(.1)}}
+
+@media(max-width:900px){
+  .directory-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
 @media(max-width:760px){
   .site{padding:0 21px}
   nav{height:65px}
@@ -235,9 +327,20 @@ footer{
   .identity{transform:none}
   section{padding:62px 0}
   .about-grid{grid-template-columns:1fr}
-  .directory-grid{grid-template-columns:1fr}
   .directory{min-height:185px}
   .transmission{align-items:flex-start;flex-direction:column}
+  .music-modal{padding:25px 19px}
+  .player-main{grid-template-columns:125px 1fr;gap:16px}
+  .player-controls{gap:8px;flex-wrap:wrap}
+  .listen-btn{padding:10px}
+}
+@media(max-width:430px){
+  .directory-grid{grid-template-columns:1fr}
+  .player-main{grid-template-columns:1fr}
+  .album-art{max-width:190px;width:100%;margin:auto}
+  .player-info{text-align:center}
+  .player-controls{justify-content:center}
+  .track{grid-template-columns:25px 1fr auto;padding:12px 10px}
 }
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{scroll-behavior:auto!important;animation:none!important;transition:none!important}
@@ -260,13 +363,11 @@ footer{
 <header class="hero">
   <div class="reveal">
     <div class="hero-tag"></div>
-
     <div class="live-clock">
       <span class="clock-dot"></span>
       <span class="clock-label">LOCAL TIME</span>
       <span class="clock-time" id="liveTime">00:00:00</span>
     </div>
-
     <h1>HELLO,<br><span class="glow">STRANGER.</span></h1>
     <p class="lead">这里是互联网的一个野生角落。<br>没写什么正经介绍，我懒。随便逛逛吧，反正我也拦不住你。</p>
     <div class="hero-actions">
@@ -344,6 +445,12 @@ footer{
       <h3>电影</h3>
       <p>Some birds aren't meant to be caged</p>
     </article>
+    <article class="directory" data-folder="CP品味">
+      <span class="index">DIR_04</span><span class="dir-arrow">↗</span>
+      <div class="dir-icon">♡</div>
+      <h3>CP品味</h3>
+      <p>Some fictional relationships.</p>
+    </article>
   </div>
 </section>
 
@@ -367,14 +474,106 @@ footer{
 </footer>
 </div>
 
-<!-- 目录弹窗 -->
+<!-- 普通目录弹窗 -->
 <div class="modal-backdrop" id="folderModal" aria-hidden="true">
   <div class="modal" role="dialog" aria-modal="true">
     <button class="modal-close" data-close="folderModal">✕</button>
-    <div class="modal-tag" id="folderTag">DIRECTORY / 01</div>
-    <h3 id="folderTitle">音乐</h3>
+    <div class="modal-tag" id="folderTag">DIRECTORY / 02</div>
+    <h3 id="folderTitle">游戏</h3>
     <p id="folderDesc"></p>
     <div class="modal-hint" id="folderHint"></div>
+  </div>
+</div>
+
+<!-- 音乐播放器弹窗 -->
+<div class="modal-backdrop" id="musicModal" aria-hidden="true">
+  <div class="modal music-modal" role="dialog" aria-modal="true" aria-labelledby="musicTitle">
+    <button class="modal-close" data-close="musicModal">✕</button>
+    <div class="modal-tag">DIRECTORY / 01 — MUSIC ARCHIVE</div>
+    <h3 id="musicTitle">A LIFE WITH HEADPHONES ON.</h3>
+    <p class="music-intro">常年戴着耳机。<br>偏爱爵士（比如 Al Bowlly），也听点嘻哈说唱。<br>歌单乱七八糟，什么都听。</p>
+
+    <div class="music-player">
+      <div class="player-main">
+        <div class="album-art">
+          <span class="art-index" id="artIndex">TRACK / 01</span>
+          <div class="art-disc"><span></span></div>
+        </div>
+        <div class="player-info">
+          <div class="player-label">NOW SELECTED</div>
+          <div class="player-title" id="currentTitle">Dark Fantasy</div>
+          <div class="player-artist" id="currentArtist">Kanye West</div>
+          <div class="player-album">FROM MY PERSONAL ROTATION</div>
+          <div class="player-controls">
+            <button class="control-btn" id="prevTrack" aria-label="上一首">↶</button>
+            <button class="listen-btn" id="listenTrack">OPEN IN NETEASE ↗</button>
+            <button class="control-btn" id="nextTrack" aria-label="下一首">↷</button>
+          </div>
+          <div class="player-note">这里不直接播放音频。选中歌曲后，点击按钮即可前往网易云音乐。</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="track-heading">
+      <span>FAVOURITE TRACKS</span>
+      <span id="trackCount">05 TRACKS</span>
+    </div>
+    <div class="track-list" id="trackList">
+      <button class="track active" data-track="0">
+        <span class="track-number">01</span>
+        <span><span class="track-name">Dark Fantasy</span><span class="track-artist">Kanye West</span></span>
+        <span class="track-state">SELECTED</span>
+      </button>
+      <button class="track" data-track="1">
+        <span class="track-number">02</span>
+        <span><span class="track-name">Midnight, The Stars and You</span><span class="track-artist">Ray Noble Orchestra / Al Bowlly</span></span>
+        <span class="track-state"></span>
+      </button>
+      <button class="track" data-track="2">
+        <span class="track-number">03</span>
+        <span><span class="track-name">Special to Me</span><span class="track-artist">Bobby Caldwell</span></span>
+        <span class="track-state"></span>
+      </button>
+      <button class="track" data-track="3">
+        <span class="track-number">04</span>
+        <span><span class="track-name">Friesenjung</span><span class="track-artist">Ski Aggu / Joost / Otto Waalkes</span></span>
+        <span class="track-state"></span>
+      </button>
+      <button class="track" data-track="4">
+        <span class="track-number">05</span>
+        <span><span class="track-name">Singin' In The Rain</span><span class="track-artist">Gene Kelly</span></span>
+        <span class="track-state"></span>
+      </button>
+    </div>
+
+    <a class="cloud-link" href="https://y.music.163.com/m/user?id=8955887292&amp;dlt=0846&amp;app_version=9.6.20" target="_blank" rel="noopener noreferrer">
+      <span>
+        <span class="cloud-label">NETEASE CLOUD MUSIC / MY PROFILE</span>
+        <span class="cloud-name">老练的可仁</span>
+      </span>
+      <span class="cloud-arrow">OPEN ↗</span>
+    </a>
+    <div class="modal-hint">A LITTLE COLLECTION OF SOUNDS I KEEP COMING BACK TO.</div>
+  </div>
+</div>
+
+<!-- CP品味弹窗 -->
+<div class="modal-backdrop" id="cpModal" aria-hidden="true">
+  <div class="modal cp-modal" role="dialog" aria-modal="true">
+    <button class="modal-close" data-close="cpModal">✕</button>
+    <div class="modal-tag">DIRECTORY / 04 — PERSONAL ARCHIVE</div>
+    <h3>CP品味</h3>
+    <p class="cp-subtitle">Some fictional relationships.</p>
+    <div class="cp-file">
+      <div class="cp-stamp">CLASSIFIED / PERSONAL INTERESTS</div>
+      <h4>RELATIONSHIP DATABASE</h4>
+      <p>一些虚构人物之间的关系，一些说不清楚的嗑点，以及一些本人拒绝解释的私人偏好。</p>
+      <div class="cp-bottom">
+        <span>CONTENT: UNDISCLOSED</span>
+        <span>STATUS: ONGOING</span>
+      </div>
+    </div>
+    <div class="modal-hint">VIEWER DISCRETION IS ADVISED. JUST KIDDING.</div>
   </div>
 </div>
 
@@ -385,7 +584,6 @@ footer{
     <div class="modal-tag">INCOMING CONNECTION</div>
     <h3>PING ME</h3>
     <p>信号已开放。至于什么时候回复——那就是另一个问题了。</p>
-
     <div class="contact-list">
       <div class="contact-row">
         <div class="contact-info">
@@ -394,7 +592,6 @@ footer{
         </div>
         <a class="contact-action" href="https://x.com/JohnSmith_lldkr" target="_blank" rel="noopener noreferrer">OPEN ↗</a>
       </div>
-
       <div class="contact-row">
         <div class="contact-info">
           <span class="contact-platform">QQ</span>
@@ -402,7 +599,6 @@ footer{
         </div>
         <button class="contact-action copy-btn" data-copy="1779160433">COPY</button>
       </div>
-
       <div class="contact-row">
         <div class="contact-info">
           <span class="contact-platform">DOUYIN / 抖音</span>
@@ -421,13 +617,9 @@ footer{
 /* 实时时钟 */
 function updateClock(){
   const now=new Date();
-  const time=now.toLocaleTimeString('en-GB',{
-    hour:'2-digit',
-    minute:'2-digit',
-    second:'2-digit',
-    hour12:false
+  document.getElementById('liveTime').textContent=now.toLocaleTimeString('en-GB',{
+    hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false
   });
-  document.getElementById('liveTime').textContent=time;
 }
 updateClock();
 setInterval(updateClock,1000);
@@ -512,42 +704,14 @@ setTimeout(()=>{
   },85);
 },4200);
 
-/* 目录弹窗内容 */
-const folderInfo={
-  '音乐':{
-    tag:'DIRECTORY / 01',
-    desc:'音乐档案区已开启。这里可以收藏喜欢的歌手、专辑、单曲，以及最近循环播放的歌。',
-    hint:'AUDIO ARCHIVE OPENED.'
-  },
-  '游戏':{
-    tag:'DIRECTORY / 02',
-    desc:'游戏档案区已开启。这里可以放正在玩的游戏、游戏截图、成就和一些难忘的存档。',
-    hint:'GAME ARCHIVE OPENED.'
-  },
-  '电影':{
-    tag:'DIRECTORY / 03',
-    desc:'电影档案区已开启。这里可以放观影记录、片单、评分，以及那些看完还在脑子里转的故事。',
-    hint:'CINEMA ARCHIVE OPENED.'
-  }
-};
-const folderModal=document.getElementById('folderModal');
-document.querySelectorAll('.directory').forEach(card=>{
-  card.addEventListener('click',()=>{
-    const info=folderInfo[card.dataset.folder];
-    document.getElementById('folderTag').textContent=info.tag;
-    document.getElementById('folderTitle').textContent=card.dataset.folder;
-    document.getElementById('folderDesc').textContent=info.desc;
-    document.getElementById('folderHint').textContent=info.hint;
-    openModal(folderModal);
-  });
-});
-
 /* 通用弹窗 */
 function openModal(el){
-  el.classList.add('open');el.setAttribute('aria-hidden','false');
+  el.classList.add('open');
+  el.setAttribute('aria-hidden','false');
 }
 function closeModal(el){
-  el.classList.remove('open');el.setAttribute('aria-hidden','true');
+  el.classList.remove('open');
+  el.setAttribute('aria-hidden','true');
 }
 document.querySelectorAll('[data-close]').forEach(btn=>{
   btn.addEventListener('click',()=>{
@@ -564,6 +728,104 @@ document.addEventListener('keydown',e=>{
     document.querySelectorAll('.modal-backdrop.open').forEach(closeModal);
   }
 });
+
+/* 目录弹窗内容 */
+const folderInfo={
+  '游戏':{
+    tag:'DIRECTORY / 02',
+    desc:'游戏档案区已开启。这里可以放正在玩的游戏、游戏截图、成就和一些难忘的存档。',
+    hint:'GAME ARCHIVE OPENED.'
+  },
+  '电影':{
+    tag:'DIRECTORY / 03',
+    desc:'电影档案区已开启。这里可以放观影记录、片单、评分，以及那些看完还在脑子里转的故事。',
+    hint:'CINEMA ARCHIVE OPENED.'
+  }
+};
+const folderModal=document.getElementById('folderModal');
+const musicModal=document.getElementById('musicModal');
+const cpModal=document.getElementById('cpModal');
+
+document.querySelectorAll('.directory').forEach(card=>{
+  card.addEventListener('click',()=>{
+    const folder=card.dataset.folder;
+    if(folder==='音乐'){
+      openModal(musicModal);
+      return;
+    }
+    if(folder==='CP品味'){
+      openModal(cpModal);
+      return;
+    }
+    const info=folderInfo[folder];
+    document.getElementById('folderTag').textContent=info.tag;
+    document.getElementById('folderTitle').textContent=folder;
+    document.getElementById('folderDesc').textContent=info.desc;
+    document.getElementById('folderHint').textContent=info.hint;
+    openModal(folderModal);
+  });
+});
+
+/* 音乐曲目数据 */
+const tracks=[
+  {
+    title:'Dark Fantasy',
+    artist:'Kanye West',
+    url:'https://163cn.tv/bkDaHCtu'
+  },
+  {
+    title:'Midnight, The Stars and You',
+    artist:'Ray Noble Orchestra / Al Bowlly',
+    url:'https://163cn.tv/bkDaYxWA'
+  },
+  {
+    title:'Special to Me',
+    artist:'Bobby Caldwell',
+    url:'https://163cn.tv/bkDa5KAF'
+  },
+  {
+    title:'Friesenjung',
+    artist:'Ski Aggu / Joost / Otto Waalkes',
+    url:'https://163cn.tv/bkDat3le'
+  },
+  {
+    title:"Singin' In The Rain",
+    artist:'Gene Kelly',
+    url:'https://163cn.tv/bkDa6SCR'
+  }
+];
+let currentTrack=0;
+
+function selectTrack(index){
+  currentTrack=(index+tracks.length)%tracks.length;
+  const track=tracks[currentTrack];
+  document.getElementById('currentTitle').textContent=track.title;
+  document.getElementById('currentArtist').textContent=track.artist;
+  document.getElementById('artIndex').textContent='TRACK / '+String(currentTrack+1).padStart(2,'0');
+
+  document.querySelectorAll('.track').forEach((row,i)=>{
+    const active=i===currentTrack;
+    row.classList.toggle('active',active);
+    row.querySelector('.track-state').textContent=active?'SELECTED':'';
+  });
+}
+document.querySelectorAll('.track').forEach(row=>{
+  row.addEventListener('click',()=>{
+    selectTrack(Number(row.dataset.track));
+  });
+});
+document.getElementById('prevTrack').addEventListener('click',()=>{
+  selectTrack(currentTrack-1);
+});
+document.getElementById('nextTrack').addEventListener('click',()=>{
+  selectTrack(currentTrack+1);
+});
+document.getElementById('listenTrack').addEventListener('click',()=>{
+  window.open(tracks[currentTrack].url,'_blank','noopener,noreferrer');
+});
+selectTrack(0);
+
+/* 联系弹窗 */
 document.getElementById('helloBtn').addEventListener('click',()=>{
   openModal(document.getElementById('contactModal'));
 });
