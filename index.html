@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -644,7 +645,7 @@ function drawStars(){
     s.a+=s.speed;
     const alpha=.25+Math.abs(Math.sin(s.a))*.55;
     ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
-    ctx.fillStyle=rgba(143,255,224,${alpha});ctx.fill();
+    ctx.fillStyle=`rgba(143,255,224,${alpha})`;ctx.fill();
   });
   requestAnimationFrame(drawStars);
 }
