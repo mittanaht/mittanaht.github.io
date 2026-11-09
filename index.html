@@ -3,21 +3,19 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#080d12">
 <title>NO.0606 — Mittanaht</title>
 <style>
 :root {
   --bg:#080d12;
   --panel:#101922;
-  --panel2:#131f29;
   --mint:#8fffe0;
-  --mint2:#42d9b5;
   --text:#e5f0ef;
   --muted:#82949c;
-  --line:rgba(143,255,224,.15);
+  --line:rgba(143,255,224,.16);
   --pink:#ff8eb8;
-  --mono:"SFMono-Regular",Consolas,"Liberation Mono",monospace;
+  --mono:"SFMono-Regular",Consolas,monospace;
   --sans:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft YaHei",sans-serif;
 }
 *{box-sizing:border-box}
@@ -34,7 +32,6 @@ body::before{
   background-image:linear-gradient(rgba(143,255,224,.025) 1px,transparent 1px),
   linear-gradient(90deg,rgba(143,255,224,.025) 1px,transparent 1px);
   background-size:48px 48px;
-  mask-image:linear-gradient(to bottom,black,transparent 85%);
 }
 a{color:inherit;text-decoration:none}
 button{font:inherit}
@@ -43,11 +40,10 @@ button{font:inherit}
 .site{position:relative;z-index:1;max-width:1120px;margin:auto;padding:0 34px}
 nav{
   height:78px;display:flex;align-items:center;justify-content:space-between;
-  border-bottom:1px solid var(--line);font-family:var(--mono);font-size:11px;
+  border-bottom:1px solid var(--line);font:11px var(--mono);
 }
 .brand{color:var(--mint);letter-spacing:.2em;font-weight:700}
 .nav-links{display:flex;gap:28px;color:var(--muted)}
-.nav-links a{transition:.2s}
 .nav-links a:hover{color:var(--mint)}
 .hero{
   min-height:650px;display:grid;grid-template-columns:1.2fr .8fr;
@@ -59,16 +55,12 @@ nav{
 }
 .glow{color:var(--mint);text-shadow:0 0 28px rgba(143,255,224,.25)}
 .lead{max-width:510px;color:#a7b7b9;line-height:2;font-size:14px}
-.hero-tag{
-  font:11px var(--mono);letter-spacing:.16em;color:var(--mint);
-  margin-bottom:25px;min-height:14px;
-}
 .hero-actions{display:flex;gap:12px;margin-top:32px;flex-wrap:wrap}
 .btn{
   display:inline-flex;align-items:center;justify-content:center;
   padding:13px 18px;border:1px solid var(--line);
   color:var(--mint);background:rgba(143,255,224,.04);
-  font:11px var(--mono);letter-spacing:.12em;cursor:pointer;transition:.25s;
+  font:11px var(--mono);letter-spacing:.1em;cursor:pointer;transition:.25s;
 }
 .btn:hover{background:var(--mint);color:#07110f;box-shadow:0 0 25px rgba(143,255,224,.2)}
 .btn.secondary{color:var(--muted)}
@@ -77,7 +69,7 @@ nav{
   width:min(100%,330px);min-height:390px;padding:25px;
   border:1px solid rgba(143,255,224,.27);
   background:linear-gradient(145deg,rgba(20,38,44,.95),rgba(10,17,24,.96));
-  box-shadow:0 25px 90px rgba(0,0,0,.35),inset 0 0 50px rgba(143,255,224,.025);
+  box-shadow:0 25px 90px rgba(0,0,0,.35);
   transform:rotateY(-7deg) rotateX(3deg);transition:transform .4s;
   position:relative;overflow:hidden;
 }
@@ -94,10 +86,9 @@ nav{
   border:1px solid rgba(143,255,224,.45);display:grid;place-items:center;
   color:var(--mint);font:42px var(--mono);
   background:radial-gradient(circle,rgba(143,255,224,.15),transparent 70%);
-  box-shadow:0 0 35px rgba(143,255,224,.08);
 }
 .card-name{text-align:center;font-size:27px;font-weight:750;letter-spacing:-.04em;cursor:help}
-.name-hover{display:none;color:var(--pink);font:700 10px var(--mono);letter-spacing:.05em}
+.name-hover{display:none;color:var(--pink);font:700 10px var(--mono)}
 .card-name:hover .name-default{display:none}
 .card-name:hover .name-hover{display:inline}
 .card-sub{text-align:center;font:10px var(--mono);color:var(--mint);letter-spacing:.14em;margin-top:10px}
@@ -105,14 +96,11 @@ nav{
 .card-meta{display:flex;justify-content:space-between;gap:12px;font:9px var(--mono);color:var(--muted)}
 #statusText{color:var(--mint);transition:opacity .2s}
 section{padding:80px 0;border-top:1px solid var(--line)}
-.section-head{display:flex;align-items:center;gap:18px;margin-bottom:32px}
-.section-no{font:11px var(--mono);color:var(--mint);letter-spacing:.15em}
+.section-head{display:flex;align-items:center;gap:18px;margin-bottom:32px;flex-wrap:wrap}
+.section-no{font:11px var(--mono);color:var(--mint);letter-spacing:.12em}
 .section-head h2{font-size:clamp(26px,4vw,38px);margin:0;letter-spacing:-.04em}
 .about-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:28px}
-.panel{
-  border:1px solid var(--line);background:rgba(16,25,34,.72);
-  padding:27px;position:relative;
-}
+.panel{border:1px solid var(--line);background:rgba(16,25,34,.72);padding:27px}
 .about-box p{font-size:14px;color:#b5c3c3;line-height:2.15;margin:0 0 14px}
 .terminal{
   font:11px/2 var(--mono);color:#c2d1d0;overflow-wrap:anywhere;
@@ -132,7 +120,7 @@ section{padding:80px 0;border-top:1px solid var(--line)}
 }
 .directory:hover{
   transform:translateY(-7px);border-color:rgba(143,255,224,.55);
-  box-shadow:0 15px 40px rgba(0,0,0,.25),0 0 25px rgba(143,255,224,.05);
+  box-shadow:0 15px 40px rgba(0,0,0,.25);
 }
 .directory::after{
   content:"";position:absolute;width:130px;height:130px;border:1px solid var(--line);
@@ -142,7 +130,7 @@ section{padding:80px 0;border-top:1px solid var(--line)}
 .index{font:10px var(--mono);color:var(--mint);letter-spacing:.15em}
 .dir-icon{font-size:29px;color:var(--mint);margin:32px 0 17px}
 .directory h3{font-size:20px;margin:0 0 9px}
-.directory p{font:10px var(--mono);color:var(--muted);margin:0}
+.directory p{font:10px var(--mono);color:var(--muted);margin:0;line-height:1.7}
 .dir-arrow{position:absolute;right:22px;top:20px;color:var(--muted)}
 .transmission{
   display:flex;justify-content:space-between;align-items:center;gap:25px;
@@ -177,10 +165,20 @@ footer{
 .modal p{font-size:13px;color:#aab9b9;line-height:1.9}
 .modal-hint{margin-top:24px;padding-top:15px;border-top:1px solid var(--line);font:10px var(--mono);color:var(--mint)}
 .contact-list{border:1px solid var(--line);margin-top:18px}
-.contact-row{display:flex;justify-content:space-between;gap:12px;padding:13px;border-bottom:1px solid var(--line);font:10px var(--mono)}
+.contact-row{
+  display:flex;align-items:center;justify-content:space-between;
+  gap:12px;padding:14px;border-bottom:1px solid var(--line);
+}
 .contact-row:last-child{border:0}
-.contact-row span:first-child{color:var(--mint)}
-.contact-placeholder{color:#9aa9bb;text-align:right}
+.contact-info{min-width:0}
+.contact-platform{display:block;font:10px var(--mono);color:var(--mint);letter-spacing:.12em;margin-bottom:6px}
+.contact-value{font-size:12px;color:#c4d0d0;overflow-wrap:anywhere}
+.contact-action{
+  flex-shrink:0;border:1px solid var(--line);background:rgba(143,255,224,.04);
+  color:var(--mint);font:10px var(--mono);padding:8px 10px;cursor:pointer;transition:.2s;
+}
+.contact-action:hover{background:var(--mint);color:#07110f}
+.contact-action.copied{color:var(--pink);border-color:var(--pink)}
 #topBtn{
   position:fixed;right:25px;bottom:25px;width:40px;height:40px;
   border:1px solid var(--line);background:#101b22;color:var(--mint);
@@ -194,9 +192,7 @@ footer{
   background:var(--mint);pointer-events:none;z-index:30;
   box-shadow:0 0 9px var(--mint);animation:particleFade .7s forwards;
 }
-@keyframes particleFade{
-  to{opacity:0;transform:translate(var(--dx),var(--dy)) scale(.1)}
-}
+@keyframes particleFade{to{opacity:0;transform:translate(var(--dx),var(--dy)) scale(.1)}}
 @media(max-width:760px){
   .site{padding:0 21px}
   nav{height:65px}
@@ -287,26 +283,26 @@ footer{
 <section id="obsessions" class="reveal">
   <div class="section-head">
     <span class="section-no">02 — CURRENT OBSESSIONS</span>
-    <h2>CURRENT OBSESSIONS</h2>
+    <h2>最近在沉迷什么</h2>
   </div>
   <div class="directory-grid">
     <article class="directory" data-folder="音乐">
       <span class="index">DIR_01</span><span class="dir-arrow">↗</span>
       <div class="dir-icon">♫</div>
       <h3>音乐</h3>
-      <p>SOUNDS ON REPEAT.</p>
+      <p>Jazz and some other things</p>
     </article>
     <article class="directory" data-folder="游戏">
       <span class="index">DIR_02</span><span class="dir-arrow">↗</span>
       <div class="dir-icon">⌁</div>
       <h3>游戏</h3>
-      <p>ONE MORE ROUND.</p>
+      <p>Tour de Force</p>
     </article>
     <article class="directory" data-folder="电影">
       <span class="index">DIR_03</span><span class="dir-arrow">↗</span>
       <div class="dir-icon">▣</div>
       <h3>电影</h3>
-      <p>STORIES WORTH STAYING UP FOR.</p>
+      <p>Some birds aren't meant to be caged</p>
     </article>
   </div>
 </section>
@@ -314,7 +310,7 @@ footer{
 <section id="contact" class="reveal">
   <div class="section-head">
     <span class="section-no">03 — TRANSMISSION</span>
-    <h2>TRANSMISSION</h2>
+    <h2>联系我</h2>
   </div>
   <div class="transmission">
     <div>
@@ -349,12 +345,33 @@ footer{
     <div class="modal-tag">INCOMING CONNECTION</div>
     <h3>PING ME</h3>
     <p>信号已开放。至于什么时候回复——那就是另一个问题了。</p>
+
     <div class="contact-list">
-      <div class="contact-row"><span>EMAIL</span><span class="contact-placeholder">[ add your email ]</span></div>
-      <div class="contact-row"><span>DISCORD</span><span class="contact-placeholder">[ add your handle ]</span></div>
-      <div class="contact-row"><span>OTHER</span><span class="contact-placeholder">[ your link here ]</span></div>
+      <div class="contact-row">
+        <div class="contact-info">
+          <span class="contact-platform">X / TWITTER</span>
+          <span class="contact-value">@JohnSmith_lldkr</span>
+        </div>
+        <a class="contact-action" href="https://x.com/JohnSmith_lldkr" target="_blank" rel="noopener noreferrer">OPEN ↗</a>
+      </div>
+
+      <div class="contact-row">
+        <div class="contact-info">
+          <span class="contact-platform">QQ</span>
+          <span class="contact-value">1779160433</span>
+        </div>
+        <button class="contact-action copy-btn" data-copy="1779160433">COPY</button>
+      </div>
+
+      <div class="contact-row">
+        <div class="contact-info">
+          <span class="contact-platform">DOUYIN / 抖音</span>
+          <span class="contact-value">老练的可仁</span>
+        </div>
+        <button class="contact-action copy-btn" data-copy="老练的可仁">COPY</button>
+      </div>
     </div>
-    <div class="modal-hint">CONNECTION STATUS: PENDING_</div>
+    <div class="modal-hint">CONNECTION STATUS: ONLINE_ISH</div>
   </div>
 </div>
 
@@ -373,8 +390,7 @@ function resizeStars(){
   ctx.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);
   stars=Array.from({length:Math.min(130,Math.floor(innerWidth/9))},()=>({
     x:Math.random()*innerWidth,y:Math.random()*innerHeight,
-    r:Math.random()*1.3+.2,a:Math.random()*.55+.15,
-    speed:Math.random()*.006+.002
+    r:Math.random()*1.3+.2,a:Math.random()*3,speed:Math.random()*.006+.002
   }));
 }
 function drawStars(){
@@ -428,11 +444,8 @@ setInterval(()=>{
   },220);
 },3200);
 
-/* 终端日期 */
-const now=new Date();
-document.getElementById('dateOutput').textContent=now.toDateString();
-
-/* 闪烁几秒后打出彩蛋 */
+/* 终端日期与打字彩蛋 */
+document.getElementById('dateOutput').textContent=new Date().toDateString();
 setTimeout(()=>{
   const cursor=document.getElementById('terminalCursor');
   const output=document.getElementById('terminalEasterEgg');
@@ -445,31 +458,30 @@ setTimeout(()=>{
   },85);
 },4200);
 
-/* 目录内容 */
+/* 目录弹窗内容 */
 const folderInfo={
   '音乐':{
     tag:'DIRECTORY / 01',
-    desc:'音乐档案区已开启。以后可以在这里放喜欢的歌手、专辑、单曲和正在循环播放的歌。',
+    desc:'音乐档案区已开启。这里可以收藏喜欢的歌手、专辑、单曲，以及最近循环播放的歌。',
     hint:'AUDIO ARCHIVE OPENED.'
   },
   '游戏':{
     tag:'DIRECTORY / 02',
-    desc:'游戏档案区已开启。以后可以放正在玩的游戏、游戏截图、成就和一些难忘的存档。',
+    desc:'游戏档案区已开启。这里可以放正在玩的游戏、游戏截图、成就和一些难忘的存档。',
     hint:'GAME ARCHIVE OPENED.'
   },
   '电影':{
     tag:'DIRECTORY / 03',
-    desc:'电影档案区已开启。以后可以放观影记录、片单、评分，以及那些看完还在脑子里转的故事。',
+    desc:'电影档案区已开启。这里可以放观影记录、片单、评分，以及那些看完还在脑子里转的故事。',
     hint:'CINEMA ARCHIVE OPENED.'
   }
 };
 const folderModal=document.getElementById('folderModal');
 document.querySelectorAll('.directory').forEach(card=>{
   card.addEventListener('click',()=>{
-    const name=card.dataset.folder;
-    const info=folderInfo[name];
+    const info=folderInfo[card.dataset.folder];
     document.getElementById('folderTag').textContent=info.tag;
-    document.getElementById('folderTitle').textContent=name;
+    document.getElementById('folderTitle').textContent=card.dataset.folder;
     document.getElementById('folderDesc').textContent=info.desc;
     document.getElementById('folderHint').textContent=info.hint;
     openModal(folderModal);
@@ -500,6 +512,25 @@ document.addEventListener('keydown',e=>{
 });
 document.getElementById('helloBtn').addEventListener('click',()=>{
   openModal(document.getElementById('contactModal'));
+});
+
+/* QQ 和抖音复制按钮 */
+document.querySelectorAll('.copy-btn').forEach(btn=>{
+  btn.addEventListener('click',async()=>{
+    const value=btn.dataset.copy;
+    try{
+      await navigator.clipboard.writeText(value);
+      btn.textContent='COPIED ✓';
+      btn.classList.add('copied');
+      setTimeout(()=>{
+        btn.textContent='COPY';
+        btn.classList.remove('copied');
+      },1600);
+    }catch(error){
+      btn.textContent='SELECT TEXT';
+      setTimeout(()=>btn.textContent='COPY',1600);
+    }
+  });
 });
 
 /* 滚动渐入 */
