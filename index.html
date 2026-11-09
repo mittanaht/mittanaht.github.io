@@ -1,0 +1,524 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#080d12">
+<title>NO.0606 — Mittanaht</title>
+<style>
+:root {
+  --bg:#080d12;
+  --panel:#101922;
+  --panel2:#131f29;
+  --mint:#8fffe0;
+  --mint2:#42d9b5;
+  --text:#e5f0ef;
+  --muted:#82949c;
+  --line:rgba(143,255,224,.15);
+  --pink:#ff8eb8;
+  --mono:"SFMono-Regular",Consolas,"Liberation Mono",monospace;
+  --sans:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft YaHei",sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;background:var(--bg);color:var(--text);
+  font-family:var(--sans);overflow-x:hidden;
+  background-image:
+    radial-gradient(ellipse at 15% 10%,rgba(43,128,119,.13),transparent 40%),
+    radial-gradient(ellipse at 85% 60%,rgba(35,91,119,.12),transparent 42%);
+}
+body::before{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:linear-gradient(rgba(143,255,224,.025) 1px,transparent 1px),
+  linear-gradient(90deg,rgba(143,255,224,.025) 1px,transparent 1px);
+  background-size:48px 48px;
+  mask-image:linear-gradient(to bottom,black,transparent 85%);
+}
+a{color:inherit;text-decoration:none}
+button{font:inherit}
+::selection{background:var(--mint);color:#07110f}
+#stars{position:fixed;inset:0;pointer-events:none;z-index:0}
+.site{position:relative;z-index:1;max-width:1120px;margin:auto;padding:0 34px}
+nav{
+  height:78px;display:flex;align-items:center;justify-content:space-between;
+  border-bottom:1px solid var(--line);font-family:var(--mono);font-size:11px;
+}
+.brand{color:var(--mint);letter-spacing:.2em;font-weight:700}
+.nav-links{display:flex;gap:28px;color:var(--muted)}
+.nav-links a{transition:.2s}
+.nav-links a:hover{color:var(--mint)}
+.hero{
+  min-height:650px;display:grid;grid-template-columns:1.2fr .8fr;
+  align-items:center;gap:50px;padding:80px 0 100px;
+}
+.hero h1{
+  font-size:clamp(58px,9vw,108px);line-height:.94;
+  letter-spacing:-.075em;margin:0 0 30px;font-weight:850;
+}
+.glow{color:var(--mint);text-shadow:0 0 28px rgba(143,255,224,.25)}
+.lead{max-width:510px;color:#a7b7b9;line-height:2;font-size:14px}
+.hero-tag{
+  font:11px var(--mono);letter-spacing:.16em;color:var(--mint);
+  margin-bottom:25px;min-height:14px;
+}
+.hero-actions{display:flex;gap:12px;margin-top:32px;flex-wrap:wrap}
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;
+  padding:13px 18px;border:1px solid var(--line);
+  color:var(--mint);background:rgba(143,255,224,.04);
+  font:11px var(--mono);letter-spacing:.12em;cursor:pointer;transition:.25s;
+}
+.btn:hover{background:var(--mint);color:#07110f;box-shadow:0 0 25px rgba(143,255,224,.2)}
+.btn.secondary{color:var(--muted)}
+.identity-wrap{display:flex;justify-content:center;perspective:900px}
+.identity{
+  width:min(100%,330px);min-height:390px;padding:25px;
+  border:1px solid rgba(143,255,224,.27);
+  background:linear-gradient(145deg,rgba(20,38,44,.95),rgba(10,17,24,.96));
+  box-shadow:0 25px 90px rgba(0,0,0,.35),inset 0 0 50px rgba(143,255,224,.025);
+  transform:rotateY(-7deg) rotateX(3deg);transition:transform .4s;
+  position:relative;overflow:hidden;
+}
+.identity:hover{transform:rotateY(0) rotateX(0) translateY(-5px)}
+.identity::after{
+  content:"";position:absolute;width:230px;height:230px;right:-100px;top:-100px;
+  border:1px solid rgba(143,255,224,.16);border-radius:50%;
+  box-shadow:0 0 0 22px rgba(143,255,224,.025),0 0 0 45px rgba(143,255,224,.02);
+}
+.card-top{display:flex;justify-content:space-between;font:10px var(--mono);color:var(--muted)}
+.card-dot{width:7px;height:7px;background:var(--mint);border-radius:50%;box-shadow:0 0 12px var(--mint)}
+.avatar{
+  width:112px;height:112px;margin:55px auto 25px;border-radius:50%;
+  border:1px solid rgba(143,255,224,.45);display:grid;place-items:center;
+  color:var(--mint);font:42px var(--mono);
+  background:radial-gradient(circle,rgba(143,255,224,.15),transparent 70%);
+  box-shadow:0 0 35px rgba(143,255,224,.08);
+}
+.card-name{text-align:center;font-size:27px;font-weight:750;letter-spacing:-.04em;cursor:help}
+.name-hover{display:none;color:var(--pink);font:700 10px var(--mono);letter-spacing:.05em}
+.card-name:hover .name-default{display:none}
+.card-name:hover .name-hover{display:inline}
+.card-sub{text-align:center;font:10px var(--mono);color:var(--mint);letter-spacing:.14em;margin-top:10px}
+.card-divider{height:1px;background:var(--line);margin:30px 0 18px}
+.card-meta{display:flex;justify-content:space-between;gap:12px;font:9px var(--mono);color:var(--muted)}
+#statusText{color:var(--mint);transition:opacity .2s}
+section{padding:80px 0;border-top:1px solid var(--line)}
+.section-head{display:flex;align-items:center;gap:18px;margin-bottom:32px}
+.section-no{font:11px var(--mono);color:var(--mint);letter-spacing:.15em}
+.section-head h2{font-size:clamp(26px,4vw,38px);margin:0;letter-spacing:-.04em}
+.about-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:28px}
+.panel{
+  border:1px solid var(--line);background:rgba(16,25,34,.72);
+  padding:27px;position:relative;
+}
+.about-box p{font-size:14px;color:#b5c3c3;line-height:2.15;margin:0 0 14px}
+.terminal{
+  font:11px/2 var(--mono);color:#c2d1d0;overflow-wrap:anywhere;
+  background:#080e13;border:1px solid rgba(143,255,224,.12);
+  padding:20px;min-height:220px;
+}
+.dim{color:#71868a}
+.green{color:var(--mint)}
+#terminalCursor{display:inline-block;animation:blink .8s steps(2,start) infinite}
+@keyframes blink{to{visibility:hidden}}
+#terminalEasterEgg{color:var(--pink)}
+.directory-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}
+.directory{
+  min-height:225px;padding:23px;border:1px solid var(--line);
+  background:linear-gradient(145deg,rgba(18,31,39,.9),rgba(10,17,24,.9));
+  cursor:pointer;transition:.3s;position:relative;overflow:hidden;
+}
+.directory:hover{
+  transform:translateY(-7px);border-color:rgba(143,255,224,.55);
+  box-shadow:0 15px 40px rgba(0,0,0,.25),0 0 25px rgba(143,255,224,.05);
+}
+.directory::after{
+  content:"";position:absolute;width:130px;height:130px;border:1px solid var(--line);
+  border-radius:50%;right:-65px;bottom:-65px;transition:.4s;
+}
+.directory:hover::after{transform:scale(1.6)}
+.index{font:10px var(--mono);color:var(--mint);letter-spacing:.15em}
+.dir-icon{font-size:29px;color:var(--mint);margin:32px 0 17px}
+.directory h3{font-size:20px;margin:0 0 9px}
+.directory p{font:10px var(--mono);color:var(--muted);margin:0}
+.dir-arrow{position:absolute;right:22px;top:20px;color:var(--muted)}
+.transmission{
+  display:flex;justify-content:space-between;align-items:center;gap:25px;
+  padding:30px;border:1px solid var(--line);
+  background:linear-gradient(100deg,rgba(143,255,224,.07),rgba(16,25,34,.65));
+}
+.transmission strong{font-size:19px}
+.transmission p{font-size:12px;color:var(--muted);margin:9px 0 0}
+footer{
+  padding:28px 0 38px;border-top:1px solid var(--line);
+  display:flex;justify-content:space-between;gap:15px;flex-wrap:wrap;
+  color:var(--muted);font:10px var(--mono);letter-spacing:.1em;
+}
+.modal-backdrop{
+  position:fixed;inset:0;z-index:20;background:rgba(1,6,10,.78);
+  backdrop-filter:blur(10px);display:none;place-items:center;padding:20px;
+}
+.modal-backdrop.open{display:grid;animation:fadeIn .2s}
+.modal{
+  width:min(100%,490px);padding:32px;border:1px solid rgba(143,255,224,.3);
+  background:#0d171e;box-shadow:0 25px 90px #000;position:relative;
+  animation:modalIn .25s;
+}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes modalIn{from{transform:translateY(12px) scale(.98)}to{transform:none}}
+.modal-close{
+  position:absolute;right:18px;top:17px;background:none;border:0;
+  color:var(--muted);font-size:19px;cursor:pointer;
+}
+.modal-tag{font:10px var(--mono);color:var(--mint);letter-spacing:.15em}
+.modal h3{font-size:29px;margin:15px 0}
+.modal p{font-size:13px;color:#aab9b9;line-height:1.9}
+.modal-hint{margin-top:24px;padding-top:15px;border-top:1px solid var(--line);font:10px var(--mono);color:var(--mint)}
+.contact-list{border:1px solid var(--line);margin-top:18px}
+.contact-row{display:flex;justify-content:space-between;gap:12px;padding:13px;border-bottom:1px solid var(--line);font:10px var(--mono)}
+.contact-row:last-child{border:0}
+.contact-row span:first-child{color:var(--mint)}
+.contact-placeholder{color:#9aa9bb;text-align:right}
+#topBtn{
+  position:fixed;right:25px;bottom:25px;width:40px;height:40px;
+  border:1px solid var(--line);background:#101b22;color:var(--mint);
+  cursor:pointer;opacity:0;pointer-events:none;transition:.25s;z-index:5;
+}
+#topBtn.show{opacity:1;pointer-events:auto}
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .7s,transform .7s}
+.reveal.visible{opacity:1;transform:none}
+.particle{
+  position:fixed;width:4px;height:4px;border-radius:50%;
+  background:var(--mint);pointer-events:none;z-index:30;
+  box-shadow:0 0 9px var(--mint);animation:particleFade .7s forwards;
+}
+@keyframes particleFade{
+  to{opacity:0;transform:translate(var(--dx),var(--dy)) scale(.1)}
+}
+@media(max-width:760px){
+  .site{padding:0 21px}
+  nav{height:65px}
+  .nav-links{gap:14px;font-size:9px}
+  .hero{grid-template-columns:1fr;gap:55px;padding:80px 0}
+  .hero h1{font-size:clamp(58px,15vw,88px)}
+  .identity{transform:none}
+  section{padding:62px 0}
+  .about-grid{grid-template-columns:1fr}
+  .directory-grid{grid-template-columns:1fr}
+  .directory{min-height:185px}
+  .transmission{align-items:flex-start;flex-direction:column}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{scroll-behavior:auto!important;animation:none!important;transition:none!important}
+}
+</style>
+</head>
+<body>
+<canvas id="stars"></canvas>
+
+<div class="site">
+<nav>
+  <a class="brand" href="#">NO.0606</a>
+  <div class="nav-links">
+    <a href="#about">ABOUT</a>
+    <a href="#obsessions">DIRECTORIES</a>
+    <a href="#contact">PING</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="reveal">
+    <div class="hero-tag"></div>
+    <h1>HELLO,<br><span class="glow">STRANGER.</span></h1>
+    <p class="lead">这里是互联网的一个野生角落。<br>没写什么正经介绍，我懒。随便逛逛吧，反正我也拦不住你。</p>
+    <div class="hero-actions">
+      <a class="btn" href="#about">ENTER THE SPACE ↘</a>
+      <a class="btn secondary" href="#obsessions">TAKE A LOOK</a>
+    </div>
+  </div>
+
+  <div class="identity-wrap reveal">
+    <div class="identity">
+      <div class="card-top"><span>PERSONAL NODE / 0606</span><span class="card-dot"></span></div>
+      <div class="avatar">M.</div>
+      <div class="card-name">
+        <span class="name-default">Mittanaht</span>
+        <span class="name-hover">WE DONT TALK ABOUT THIS</span>
+      </div>
+      <div class="card-sub">HUMAN. BUT WEIRD</div>
+      <div class="card-divider"></div>
+      <div class="card-meta">
+        <span>LOCATION: SOMEWHERE</span>
+        <span id="statusText">STATUS: CAFFEINATED</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section id="about" class="reveal">
+  <div class="section-head">
+    <span class="section-no">01 — PROFILE</span>
+    <h2>关于我</h2>
+  </div>
+  <div class="about-grid">
+    <div class="panel about-box">
+      <p>哈喽，你可以叫我 <span class="glow"><b>Mittanaht</b></span>，或者 <span class="glow"><b>可仁</b></span>。</p>
+      <p>这里是个存放脑电波的野生角落。平时网瘾很大，重度冲浪选手，靠电影续命。</p>
+      <p>当然偶尔也会干点正经事：和数学题死磕，在钢琴上乱弹，随便画点东西，或者写点不知所云的碎碎念。</p>
+      <p>随便看看就好。</p>
+    </div>
+    <div class="terminal">
+      <div><span class="dim">visitor@my-space:~$</span> whoami</div>
+      <div class="green">Mittanaht / 老练的可仁</div>
+      <div style="margin-top:10px"><span class="dim">visitor@my-space:~$</span> echo "Lost in the midnight."</div>
+      <div class="green">Lost in the midnight.</div>
+      <div style="margin-top:10px"><span class="dim">visitor@my-space:~$</span> date</div>
+      <div id="dateOutput" class="green"></div>
+      <div style="margin-top:10px">
+        <span class="dim">visitor@my-space:~$</span>
+        <span class="green" id="terminalCursor">_</span><span id="terminalEasterEgg"></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="obsessions" class="reveal">
+  <div class="section-head">
+    <span class="section-no">02 — CURRENT OBSESSIONS</span>
+    <h2>CURRENT OBSESSIONS</h2>
+  </div>
+  <div class="directory-grid">
+    <article class="directory" data-folder="音乐">
+      <span class="index">DIR_01</span><span class="dir-arrow">↗</span>
+      <div class="dir-icon">♫</div>
+      <h3>音乐</h3>
+      <p>SOUNDS ON REPEAT.</p>
+    </article>
+    <article class="directory" data-folder="游戏">
+      <span class="index">DIR_02</span><span class="dir-arrow">↗</span>
+      <div class="dir-icon">⌁</div>
+      <h3>游戏</h3>
+      <p>ONE MORE ROUND.</p>
+    </article>
+    <article class="directory" data-folder="电影">
+      <span class="index">DIR_03</span><span class="dir-arrow">↗</span>
+      <div class="dir-icon">▣</div>
+      <h3>电影</h3>
+      <p>STORIES WORTH STAYING UP FOR.</p>
+    </article>
+  </div>
+</section>
+
+<section id="contact" class="reveal">
+  <div class="section-head">
+    <span class="section-no">03 — TRANSMISSION</span>
+    <h2>TRANSMISSION</h2>
+  </div>
+  <div class="transmission">
+    <div>
+      <strong>信号已开放。</strong>
+      <p>但我不常在线，回复全看心情。</p>
+    </div>
+    <button class="btn" id="helloBtn">PING ME ↗</button>
+  </div>
+</section>
+
+<footer>
+  <span>© 2026 MITTANAHT</span>
+  <span>BUILT WITH PROCRASTINATION</span>
+</footer>
+</div>
+
+<!-- 目录弹窗 -->
+<div class="modal-backdrop" id="folderModal" aria-hidden="true">
+  <div class="modal" role="dialog" aria-modal="true">
+    <button class="modal-close" data-close="folderModal">✕</button>
+    <div class="modal-tag" id="folderTag">DIRECTORY / 01</div>
+    <h3 id="folderTitle">音乐</h3>
+    <p id="folderDesc"></p>
+    <div class="modal-hint" id="folderHint"></div>
+  </div>
+</div>
+
+<!-- 联系方式弹窗 -->
+<div class="modal-backdrop" id="contactModal" aria-hidden="true">
+  <div class="modal" role="dialog" aria-modal="true">
+    <button class="modal-close" data-close="contactModal">✕</button>
+    <div class="modal-tag">INCOMING CONNECTION</div>
+    <h3>PING ME</h3>
+    <p>信号已开放。至于什么时候回复——那就是另一个问题了。</p>
+    <div class="contact-list">
+      <div class="contact-row"><span>EMAIL</span><span class="contact-placeholder">[ add your email ]</span></div>
+      <div class="contact-row"><span>DISCORD</span><span class="contact-placeholder">[ add your handle ]</span></div>
+      <div class="contact-row"><span>OTHER</span><span class="contact-placeholder">[ your link here ]</span></div>
+    </div>
+    <div class="modal-hint">CONNECTION STATUS: PENDING_</div>
+  </div>
+</div>
+
+<button id="topBtn" aria-label="回到顶部">↑</button>
+
+<script>
+/* 星空背景 */
+const canvas=document.getElementById('stars');
+const ctx=canvas.getContext('2d');
+let stars=[];
+function resizeStars(){
+  canvas.width=innerWidth*devicePixelRatio;
+  canvas.height=innerHeight*devicePixelRatio;
+  canvas.style.width=innerWidth+'px';
+  canvas.style.height=innerHeight+'px';
+  ctx.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);
+  stars=Array.from({length:Math.min(130,Math.floor(innerWidth/9))},()=>({
+    x:Math.random()*innerWidth,y:Math.random()*innerHeight,
+    r:Math.random()*1.3+.2,a:Math.random()*.55+.15,
+    speed:Math.random()*.006+.002
+  }));
+}
+function drawStars(){
+  ctx.clearRect(0,0,innerWidth,innerHeight);
+  stars.forEach(s=>{
+    s.a+=s.speed;
+    const alpha=.25+Math.abs(Math.sin(s.a))*.55;
+    ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+    ctx.fillStyle=`rgba(143,255,224,${alpha})`;ctx.fill();
+  });
+  requestAnimationFrame(drawStars);
+}
+addEventListener('resize',resizeStars);
+resizeStars();drawStars();
+
+/* 鼠标粒子拖尾和点击爆发 */
+const reducedMotion=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const finePointer=matchMedia('(pointer:fine)').matches;
+function makeParticle(x,y,burst=false){
+  const p=document.createElement('i');
+  p.className='particle';
+  p.style.left=x+'px';p.style.top=y+'px';
+  const angle=Math.random()*Math.PI*2;
+  const distance=burst?Math.random()*85+20:Math.random()*20+5;
+  p.style.setProperty('--dx',Math.cos(angle)*distance+'px');
+  p.style.setProperty('--dy',Math.sin(angle)*distance+'px');
+  if(burst){const size=Math.random()*4+2;p.style.width=size+'px';p.style.height=size+'px'}
+  document.body.appendChild(p);
+  setTimeout(()=>p.remove(),750);
+}
+if(!reducedMotion&&finePointer){
+  let last=0;
+  addEventListener('mousemove',e=>{
+    if(Date.now()-last<22)return;
+    last=Date.now();makeParticle(e.clientX,e.clientY);
+  });
+  addEventListener('click',e=>{
+    for(let i=0;i<18;i++)makeParticle(e.clientX,e.clientY,true);
+  });
+}
+
+/* 身份卡状态轮换 */
+const statuses=['STATUS: CAFFEINATED','STATUS: OVERTHINKING','STATUS: ERROR'];
+let statusIndex=0;
+setInterval(()=>{
+  const el=document.getElementById('statusText');
+  el.style.opacity=0;
+  setTimeout(()=>{
+    statusIndex=(statusIndex+1)%statuses.length;
+    el.textContent=statuses[statusIndex];el.style.opacity=1;
+  },220);
+},3200);
+
+/* 终端日期 */
+const now=new Date();
+document.getElementById('dateOutput').textContent=now.toDateString();
+
+/* 闪烁几秒后打出彩蛋 */
+setTimeout(()=>{
+  const cursor=document.getElementById('terminalCursor');
+  const output=document.getElementById('terminalEasterEgg');
+  cursor.style.animation='none';cursor.style.visibility='hidden';
+  const message='Error: Nothing to see here.';
+  let i=0;
+  const typer=setInterval(()=>{
+    output.textContent+=message[i++];
+    if(i>=message.length)clearInterval(typer);
+  },85);
+},4200);
+
+/* 目录内容 */
+const folderInfo={
+  '音乐':{
+    tag:'DIRECTORY / 01',
+    desc:'音乐档案区已开启。以后可以在这里放喜欢的歌手、专辑、单曲和正在循环播放的歌。',
+    hint:'AUDIO ARCHIVE OPENED.'
+  },
+  '游戏':{
+    tag:'DIRECTORY / 02',
+    desc:'游戏档案区已开启。以后可以放正在玩的游戏、游戏截图、成就和一些难忘的存档。',
+    hint:'GAME ARCHIVE OPENED.'
+  },
+  '电影':{
+    tag:'DIRECTORY / 03',
+    desc:'电影档案区已开启。以后可以放观影记录、片单、评分，以及那些看完还在脑子里转的故事。',
+    hint:'CINEMA ARCHIVE OPENED.'
+  }
+};
+const folderModal=document.getElementById('folderModal');
+document.querySelectorAll('.directory').forEach(card=>{
+  card.addEventListener('click',()=>{
+    const name=card.dataset.folder;
+    const info=folderInfo[name];
+    document.getElementById('folderTag').textContent=info.tag;
+    document.getElementById('folderTitle').textContent=name;
+    document.getElementById('folderDesc').textContent=info.desc;
+    document.getElementById('folderHint').textContent=info.hint;
+    openModal(folderModal);
+  });
+});
+
+/* 通用弹窗 */
+function openModal(el){
+  el.classList.add('open');el.setAttribute('aria-hidden','false');
+}
+function closeModal(el){
+  el.classList.remove('open');el.setAttribute('aria-hidden','true');
+}
+document.querySelectorAll('[data-close]').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    closeModal(document.getElementById(btn.dataset.close));
+  });
+});
+document.querySelectorAll('.modal-backdrop').forEach(backdrop=>{
+  backdrop.addEventListener('click',e=>{
+    if(e.target===backdrop)closeModal(backdrop);
+  });
+});
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'){
+    document.querySelectorAll('.modal-backdrop.open').forEach(closeModal);
+  }
+});
+document.getElementById('helloBtn').addEventListener('click',()=>{
+  openModal(document.getElementById('contactModal'));
+});
+
+/* 滚动渐入 */
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      entry.target.classList.add('visible');
+      observer.unobserve(entry.target);
+    }
+  });
+},{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+
+/* 回到顶部 */
+const topBtn=document.getElementById('topBtn');
+addEventListener('scroll',()=>{
+  topBtn.classList.toggle('show',scrollY>450);
+});
+topBtn.addEventListener('click',()=>scrollTo({top:0,behavior:'smooth'}));
+</script>
+</body>
+</html>
