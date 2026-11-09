@@ -1,871 +1,126 @@
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-CN">
 <head>
-<meta charset="UTF-8">
+<meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#080d12">
-<title>NO.0606 — Mittanaht</title>
+<meta name="theme-color" content="#070d12">
+<meta name="description" content="NO.0606 — Mittanaht / 可仁的个人数字空间。">
+<title>NO.0606 — Mittanaht's Space</title>
 <style>
-:root {
-  --bg:#080d12;
-  --panel:#101922;
-  --mint:#8fffe0;
-  --text:#e5f0ef;
-  --muted:#82949c;
-  --line:rgba(143,255,224,.16);
-  --pink:#ff8eb8;
-  --mono:"SFMono-Regular",Consolas,monospace;
-  --sans:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft YaHei",sans-serif;
-}
-*{box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{
-  margin:0;background:var(--bg);color:var(--text);
-  font-family:var(--sans);overflow-x:hidden;
-  background-image:
-    radial-gradient(ellipse at 15% 10%,rgba(43,128,119,.13),transparent 40%),
-    radial-gradient(ellipse at 85% 60%,rgba(35,91,119,.12),transparent 42%);
-}
-body::before{
-  content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
-  background-image:linear-gradient(rgba(143,255,224,.025) 1px,transparent 1px),
-  linear-gradient(90deg,rgba(143,255,224,.025) 1px,transparent 1px);
-  background-size:48px 48px;
-}
-a{color:inherit;text-decoration:none}
-button{font:inherit}
-::selection{background:var(--mint);color:#07110f}
-#stars{position:fixed;inset:0;pointer-events:none;z-index:0}
-.site{position:relative;z-index:1;max-width:1120px;margin:auto;padding:0 34px}
-nav{
-  height:78px;display:flex;align-items:center;justify-content:space-between;
-  border-bottom:1px solid var(--line);font:11px var(--mono);
-}
-.brand{color:var(--mint);letter-spacing:.2em;font-weight:700}
-.nav-links{display:flex;gap:28px;color:var(--muted)}
-.nav-links a:hover{color:var(--mint)}
-.hero{
-  min-height:650px;display:grid;grid-template-columns:1.2fr .8fr;
-  align-items:center;gap:50px;padding:80px 0 100px;
-}
-.live-clock{display:flex;align-items:center;gap:12px;margin-bottom:22px;font-family:var(--mono)}
-.clock-label{color:var(--muted);font-size:10px;letter-spacing:.16em}
-.clock-time{
-  color:var(--mint);font-size:17px;letter-spacing:.12em;
-  font-variant-numeric:tabular-nums;text-shadow:0 0 14px rgba(143,255,224,.28);
-}
-.clock-dot{
-  width:6px;height:6px;background:var(--mint);border-radius:50%;
-  box-shadow:0 0 10px var(--mint);animation:clockPulse 1.5s infinite;
-}
-@keyframes clockPulse{50%{opacity:.3;box-shadow:0 0 2px var(--mint)}}
-.hero h1{
-  font-size:clamp(58px,9vw,108px);line-height:.94;
-  letter-spacing:-.075em;margin:0 0 30px;font-weight:850;
-}
-.glow{color:var(--mint);text-shadow:0 0 28px rgba(143,255,224,.25)}
-.lead{max-width:510px;color:#a7b7b9;line-height:2;font-size:14px}
-.hero-actions{display:flex;gap:12px;margin-top:32px;flex-wrap:wrap}
-.btn{
-  display:inline-flex;align-items:center;justify-content:center;
-  padding:13px 18px;border:1px solid var(--line);
-  color:var(--mint);background:rgba(143,255,224,.04);
-  font:11px var(--mono);letter-spacing:.1em;cursor:pointer;transition:.25s;
-}
-.btn:hover{background:var(--mint);color:#07110f;box-shadow:0 0 25px rgba(143,255,224,.2)}
-.btn.secondary{color:var(--muted)}
-.identity-wrap{display:flex;justify-content:center;perspective:900px}
-.identity{
-  width:min(100%,330px);min-height:390px;padding:25px;
-  border:1px solid rgba(143,255,224,.27);
-  background:linear-gradient(145deg,rgba(20,38,44,.95),rgba(10,17,24,.96));
-  box-shadow:0 25px 90px rgba(0,0,0,.35);
-  transform:rotateY(-7deg) rotateX(3deg);transition:transform .4s;
-  position:relative;overflow:hidden;
-}
-.identity:hover{transform:rotateY(0) rotateX(0) translateY(-5px)}
-.identity::after{
-  content:"";position:absolute;width:230px;height:230px;right:-100px;top:-100px;
-  border:1px solid rgba(143,255,224,.16);border-radius:50%;
-  box-shadow:0 0 0 22px rgba(143,255,224,.025),0 0 0 45px rgba(143,255,224,.02);
-}
-.card-top{display:flex;justify-content:space-between;font:10px var(--mono);color:var(--muted)}
-.card-dot{width:7px;height:7px;background:var(--mint);border-radius:50%;box-shadow:0 0 12px var(--mint)}
-.avatar{
-  width:112px;height:112px;margin:55px auto 25px;border-radius:50%;
-  border:1px solid rgba(143,255,224,.45);display:grid;place-items:center;
-  color:var(--mint);font:42px var(--mono);
-  background:radial-gradient(circle,rgba(143,255,224,.15),transparent 70%);
-}
-.card-name{text-align:center;font-size:27px;font-weight:750;letter-spacing:-.04em;cursor:help}
-.name-hover{display:none;color:var(--pink);font:700 10px var(--mono)}
-.card-name:hover .name-default{display:none}
-.card-name:hover .name-hover{display:inline}
-.card-sub{text-align:center;font:10px var(--mono);color:var(--mint);letter-spacing:.14em;margin-top:10px}
-.card-divider{height:1px;background:var(--line);margin:30px 0 18px}
-.card-meta{display:flex;justify-content:space-between;gap:12px;font:9px var(--mono);color:var(--muted)}
-#statusText{color:var(--mint);transition:opacity .2s}
-section{padding:80px 0;border-top:1px solid var(--line)}
-.section-head{display:flex;align-items:center;gap:18px;margin-bottom:32px;flex-wrap:wrap}
-.section-no{font:11px var(--mono);color:var(--mint);letter-spacing:.12em}
-.section-head h2{font-size:clamp(26px,4vw,38px);margin:0;letter-spacing:-.04em}
-.about-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:28px}
-.panel{border:1px solid var(--line);background:rgba(16,25,34,.72);padding:27px}
-.about-box p{font-size:14px;color:#b5c3c3;line-height:2.15;margin:0 0 14px}
-.terminal{
-  font:11px/2 var(--mono);color:#c2d1d0;overflow-wrap:anywhere;
-  background:#080e13;border:1px solid rgba(143,255,224,.12);
-  padding:20px;min-height:220px;
-}
-.dim{color:#71868a}
-.green{color:var(--mint)}
-#terminalCursor{display:inline-block;animation:blink .8s steps(2,start) infinite}
-@keyframes blink{to{visibility:hidden}}
-#terminalEasterEgg{color:var(--pink)}
-
-/* 首页目录 */
-.directory-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:15px}
-.directory{
-  min-height:225px;padding:23px;border:1px solid var(--line);
-  background:linear-gradient(145deg,rgba(18,31,39,.9),rgba(10,17,24,.9));
-  cursor:pointer;transition:.3s;position:relative;overflow:hidden;
-}
-.directory:hover{
-  transform:translateY(-7px);border-color:rgba(143,255,224,.55);
-  box-shadow:0 15px 40px rgba(0,0,0,.25);
-}
-.directory::after{
-  content:"";position:absolute;width:130px;height:130px;border:1px solid var(--line);
-  border-radius:50%;right:-65px;bottom:-65px;transition:.4s;
-}
-.directory:hover::after{transform:scale(1.6)}
-.index{font:10px var(--mono);color:var(--mint);letter-spacing:.15em}
-.dir-icon{font-size:29px;color:var(--mint);margin:32px 0 17px}
-.directory h3{font-size:20px;margin:0 0 9px}
-.directory p{font:10px var(--mono);color:var(--muted);margin:0;line-height:1.7}
-.dir-arrow{position:absolute;right:22px;top:20px;color:var(--muted)}
-.transmission{
-  display:flex;justify-content:space-between;align-items:center;gap:25px;
-  padding:30px;border:1px solid var(--line);
-  background:linear-gradient(100deg,rgba(143,255,224,.07),rgba(16,25,34,.65));
-}
-.transmission strong{font-size:19px}
-.transmission p{font-size:12px;color:var(--muted);margin:9px 0 0}
-footer{
-  padding:28px 0 38px;border-top:1px solid var(--line);
-  display:flex;justify-content:space-between;gap:15px;flex-wrap:wrap;
-  color:var(--muted);font:10px var(--mono);letter-spacing:.1em;
-}
-
-/* 通用弹窗 */
-.modal-backdrop{
-  position:fixed;inset:0;z-index:20;background:rgba(1,6,10,.78);
-  backdrop-filter:blur(10px);display:none;place-items:center;padding:20px;
-}
-.modal-backdrop.open{display:grid;animation:fadeIn .2s}
-.modal{
-  width:min(100%,490px);max-height:90vh;overflow-y:auto;padding:32px;
-  border:1px solid rgba(143,255,224,.3);
-  background:#0d171e;box-shadow:0 25px 90px #000;position:relative;
-  animation:modalIn .25s;
-}
-@keyframes fadeIn{from{opacity:0}to{opacity:1}}
-@keyframes modalIn{from{transform:translateY(12px) scale(.98)}to{transform:none}}
-.modal-close{
-  position:absolute;right:18px;top:17px;background:none;border:0;
-  color:var(--muted);font-size:19px;cursor:pointer;z-index:2;
-}
-.modal-tag{font:10px var(--mono);color:var(--mint);letter-spacing:.15em}
-.modal h3{font-size:29px;margin:15px 0}
-.modal p{font-size:13px;color:#aab9b9;line-height:1.9}
-.modal-hint{margin-top:24px;padding-top:15px;border-top:1px solid var(--line);font:10px var(--mono);color:var(--mint)}
-.contact-list{border:1px solid var(--line);margin-top:18px}
-.contact-row{
-  display:flex;align-items:center;justify-content:space-between;
-  gap:12px;padding:14px;border-bottom:1px solid var(--line);
-}
-.contact-row:last-child{border:0}
-.contact-info{min-width:0}
-.contact-platform{display:block;font:10px var(--mono);color:var(--mint);letter-spacing:.12em;margin-bottom:6px}
-.contact-value{font-size:12px;color:#c4d0d0;overflow-wrap:anywhere}
-.contact-action{
-  flex-shrink:0;border:1px solid var(--line);background:rgba(143,255,224,.04);
-  color:var(--mint);font:10px var(--mono);padding:8px 10px;cursor:pointer;transition:.2s;
-}
-.contact-action:hover{background:var(--mint);color:#07110f}
-.contact-action.copied{color:var(--pink);border-color:var(--pink)}
-
-/* 音乐档案播放器 */
-.music-modal{width:min(100%,720px);padding:34px}
-.music-intro{color:#aab9b9;font-size:13px;line-height:2;margin:8px 0 24px}
-.music-player{
-  border:1px solid var(--line);
-  background:linear-gradient(145deg,rgba(18,34,40,.96),rgba(8,15,21,.98));
-  padding:22px;
-}
-.player-main{display:grid;grid-template-columns:190px 1fr;gap:25px;align-items:center}
-.album-art{
-  aspect-ratio:1;position:relative;overflow:hidden;display:grid;place-items:center;
-  background:radial-gradient(circle at 35% 30%,rgba(143,255,224,.35),transparent 35%),
-  linear-gradient(145deg,#294b4b,#101b26 65%,#070d12);
-  border:1px solid rgba(143,255,224,.25);
-}
-.album-art::before,.album-art::after{
-  content:"";position:absolute;border:1px solid rgba(143,255,224,.25);
-  border-radius:50%;width:70%;aspect-ratio:1;
-}
-.album-art::after{width:48%;border-color:rgba(143,255,224,.16)}
-.art-disc{
-  width:42%;aspect-ratio:1;border-radius:50%;
-  background:repeating-radial-gradient(circle,#0b1115 0 3px,#1b2b30 4px 5px);
-  border:1px solid rgba(143,255,224,.35);z-index:1;
-  display:grid;place-items:center;
-}
-.art-disc span{
-  width:23%;aspect-ratio:1;border-radius:50%;background:var(--mint);
-  box-shadow:0 0 18px rgba(143,255,224,.5);
-}
-.art-index{
-  position:absolute;left:12px;top:12px;font:9px var(--mono);
-  color:rgba(229,240,239,.75);letter-spacing:.14em;
-}
-.player-info{min-width:0}
-.player-label{font:10px var(--mono);color:var(--mint);letter-spacing:.15em}
-.player-title{font-size:clamp(20px,4vw,27px);line-height:1.25;margin:12px 0 7px;overflow-wrap:anywhere}
-.player-artist{font-size:13px;color:#a7b7b9}
-.player-album{font:10px var(--mono);color:var(--muted);margin-top:15px}
-.player-controls{display:flex;align-items:center;gap:12px;margin-top:23px}
-.control-btn{
-  width:38px;height:38px;border:1px solid var(--line);border-radius:50%;
-  background:rgba(143,255,224,.04);color:var(--mint);cursor:pointer;transition:.2s;
-  display:grid;place-items:center;font-size:16px;
-}
-.control-btn:hover{background:var(--mint);color:#07110f}
-.listen-btn{
-  display:inline-flex;align-items:center;justify-content:center;
-  padding:11px 14px;border:1px solid var(--mint);background:var(--mint);
-  color:#07110f;font:10px var(--mono);letter-spacing:.1em;font-weight:700;
-  cursor:pointer;transition:.2s;
-}
-.listen-btn:hover{box-shadow:0 0 22px rgba(143,255,224,.25);transform:translateY(-2px)}
-.player-note{font-size:10px;color:var(--muted);line-height:1.7;margin-top:15px}
-.track-heading{
-  display:flex;align-items:center;justify-content:space-between;gap:12px;
-  margin:26px 0 10px;font:10px var(--mono);color:var(--mint);letter-spacing:.13em;
-}
-.track-list{border:1px solid var(--line)}
-.track{
-  width:100%;display:grid;grid-template-columns:32px 1fr auto;gap:12px;
-  align-items:center;text-align:left;padding:13px 14px;
-  border:0;border-bottom:1px solid rgba(143,255,224,.09);
-  background:transparent;color:var(--text);cursor:pointer;transition:.2s;
-}
-.track:last-child{border-bottom:0}
-.track:hover{background:rgba(143,255,224,.055)}
-.track.active{background:rgba(143,255,224,.09)}
-.track-number{font:10px var(--mono);color:var(--muted)}
-.track.active .track-number{color:var(--mint)}
-.track-name{font-size:12px;font-weight:600;display:block}
-.track-artist{font-size:10px;color:var(--muted);display:block;margin-top:4px}
-.track-state{font:9px var(--mono);color:var(--mint);letter-spacing:.08em}
-.cloud-link{
-  display:flex;align-items:center;justify-content:space-between;gap:15px;
-  margin-top:16px;padding:15px;border:1px solid var(--line);
-  background:rgba(143,255,224,.035);transition:.2s;
-}
-.cloud-link:hover{border-color:rgba(143,255,224,.5);background:rgba(143,255,224,.07)}
-.cloud-label{font:9px var(--mono);color:var(--muted);letter-spacing:.12em}
-.cloud-name{font-size:13px;color:var(--text);margin-top:5px}
-.cloud-arrow{color:var(--mint);font:14px var(--mono)}
-
-/* CP品味档案 */
-.cp-modal{width:min(100%,620px)}
-.cp-subtitle{
-  color:var(--mint);font:11px var(--mono);letter-spacing:.08em;
-  margin:0 0 24px!important;
-}
-.cp-file{
-  border:1px solid var(--line);padding:22px;
-  background:linear-gradient(145deg,rgba(22,34,42,.75),rgba(8,15,21,.8));
-}
-.cp-stamp{
-  display:inline-block;border:1px solid rgba(255,142,184,.55);
-  color:var(--pink);font:9px var(--mono);letter-spacing:.15em;
-  padding:6px 9px;transform:rotate(-2deg);margin-bottom:17px;
-}
-.cp-file h4{font:17px var(--mono);color:var(--text);margin:0 0 10px}
-.cp-file p{margin:0;color:var(--muted);font-size:12px;line-height:1.9}
-.cp-bottom{
-  display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
-  margin-top:18px;font:9px var(--mono);color:var(--muted);
-}
-#topBtn{
-  position:fixed;right:25px;bottom:25px;width:40px;height:40px;
-  border:1px solid var(--line);background:#101b22;color:var(--mint);
-  cursor:pointer;opacity:0;pointer-events:none;transition:.25s;z-index:5;
-}
-#topBtn.show{opacity:1;pointer-events:auto}
-.reveal{opacity:0;transform:translateY(20px);transition:opacity .7s,transform .7s}
-.reveal.visible{opacity:1;transform:none}
-.particle{
-  position:fixed;width:4px;height:4px;border-radius:50%;
-  background:var(--mint);pointer-events:none;z-index:30;
-  box-shadow:0 0 9px var(--mint);animation:particleFade .7s forwards;
-}
-@keyframes particleFade{to{opacity:0;transform:translate(var(--dx),var(--dy)) scale(.1)}}
-
-@media(max-width:900px){
-  .directory-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
-}
-@media(max-width:760px){
-  .site{padding:0 21px}
-  nav{height:65px}
-  .nav-links{gap:14px;font-size:9px}
-  .hero{grid-template-columns:1fr;gap:55px;padding:80px 0}
-  .hero h1{font-size:clamp(58px,15vw,88px)}
-  .identity{transform:none}
-  section{padding:62px 0}
-  .about-grid{grid-template-columns:1fr}
-  .directory{min-height:185px}
-  .transmission{align-items:flex-start;flex-direction:column}
-  .music-modal{padding:25px 19px}
-  .player-main{grid-template-columns:125px 1fr;gap:16px}
-  .player-controls{gap:8px;flex-wrap:wrap}
-  .listen-btn{padding:10px}
-}
-@media(max-width:430px){
-  .directory-grid{grid-template-columns:1fr}
-  .player-main{grid-template-columns:1fr}
-  .album-art{max-width:190px;width:100%;margin:auto}
-  .player-info{text-align:center}
-  .player-controls{justify-content:center}
-  .track{grid-template-columns:25px 1fr auto;padding:12px 10px}
-}
-@media(prefers-reduced-motion:reduce){
-  *,*::before,*::after{scroll-behavior:auto!important;animation:none!important;transition:none!important}
-}
+:root{--bg:#070d12;--panel:rgba(13,25,32,.82);--panel2:rgba(10,19,27,.94);--line:rgba(130,245,205,.2);--mint:#83f2c5;--mint2:#b2ffe0;--blue:#82baff;--muted:#91a6ad;--text:#e8f4ef;--pink:#f28fbd;--shadow:0 22px 80px rgba(0,0,0,.42)}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:90px}body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 12% 4%,#102c2c 0,transparent 34%),radial-gradient(ellipse at 88% 35%,#171a31 0,transparent 35%),var(--bg);color:var(--text);font:15px/1.7 Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;overflow-x:hidden}body:before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.12;background-image:linear-gradient(rgba(131,242,197,.1) 1px,transparent 1px),linear-gradient(90deg,rgba(131,242,197,.1) 1px,transparent 1px);background-size:48px 48px;mask-image:linear-gradient(to bottom,#000,transparent 86%)}
+a{color:inherit;text-decoration:none}button{font:inherit}.shell{width:min(1100px,calc(100% - 44px));margin:auto;position:relative;z-index:1}#stars{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}.star{position:absolute;width:2px;height:2px;border-radius:50%;background:#c9ffe9;opacity:.55;animation:twinkle 3.5s ease-in-out infinite alternate}@keyframes twinkle{to{opacity:.12;transform:scale(.5)}}@keyframes float{50%{transform:translateY(-8px)}}@keyframes spin{to{transform:rotate(360deg)}}@keyframes scan{0%{transform:translateY(-120%)}100%{transform:translateY(500%)}}@keyframes fadeIn{from{opacity:0}to{opacity:1}}@keyframes pulse{50%{box-shadow:0 0 26px rgba(131,242,197,.25)}}
+nav{height:78px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line);font-size:11px;letter-spacing:.15em;text-transform:uppercase;gap:18px}.brand{display:flex;align-items:center;gap:11px;font-weight:800;white-space:nowrap}.brand-mark{width:27px;height:27px;border:1px solid var(--mint);display:grid;place-items:center;color:var(--mint);transform:rotate(45deg)}.brand-mark span{transform:rotate(-45deg)}.navlinks{display:flex;gap:23px;color:var(--muted)}.navlinks a{transition:.2s}.navlinks a:hover{color:var(--mint)}.status{color:var(--mint);display:flex;align-items:center;gap:8px;white-space:nowrap}.dot{width:7px;height:7px;background:var(--mint);border-radius:50%;box-shadow:0 0 12px var(--mint)}
+.hero{padding:72px 0 65px;display:grid;grid-template-columns:1.35fr .65fr;gap:48px;align-items:center;min-height:540px}.eyebrow{color:var(--mint);font:10px/1.5 ui-monospace,SFMono-Regular,monospace;letter-spacing:.2em;text-transform:uppercase}.eyebrow:before{content:"";display:inline-block;width:24px;height:1px;background:var(--mint);vertical-align:middle;margin-right:10px}h1{font-size:clamp(54px,8vw,91px);line-height:.96;letter-spacing:-.075em;margin:20px 0 22px;font-weight:780}.glow{color:var(--mint);text-shadow:0 0 30px rgba(131,242,197,.25)}.lead{max-width:590px;color:#afc0c2;font-size:15px}.hero-actions{display:flex;gap:12px;margin-top:29px;flex-wrap:wrap}.btn{border:1px solid var(--line);padding:10px 15px;font-size:11px;letter-spacing:.08em;transition:.25s;display:inline-flex;align-items:center;justify-content:center;gap:9px;background:rgba(10,20,27,.7);cursor:pointer;color:var(--text)}.btn.primary{background:var(--mint);border-color:var(--mint);color:#07130f;font-weight:800}.btn:hover{transform:translateY(-3px);box-shadow:0 8px 28px rgba(131,242,197,.13);border-color:var(--mint)}.btn.small{padding:7px 11px;font-size:10px}.id-card{border:1px solid var(--line);background:linear-gradient(145deg,rgba(19,39,47,.9),rgba(8,16,25,.9));padding:21px;position:relative;overflow:hidden;animation:float 7s ease-in-out infinite;box-shadow:var(--shadow)}.id-card:after{content:"";position:absolute;left:0;right:0;top:-100%;height:80%;background:linear-gradient(transparent,rgba(131,242,197,.07),transparent);animation:scan 8s linear infinite;pointer-events:none}.card-top{display:flex;justify-content:space-between;color:var(--muted);font:9px ui-monospace,monospace;letter-spacing:.13em}.avatar{height:166px;margin:24px 0 19px;display:grid;place-items:center;position:relative;background:radial-gradient(circle,#244b4d 0,#142d36 38%,#0a131d 75%);border:1px solid rgba(131,242,197,.15)}.orbit{width:108px;height:108px;border:1px solid rgba(131,242,197,.55);border-radius:50%;position:absolute;animation:spin 18s linear infinite}.orbit:before{content:"";position:absolute;width:7px;height:7px;background:var(--mint);border-radius:50%;top:9px;left:14px;box-shadow:0 0 15px var(--mint)}.avatar-symbol{font-size:51px;color:var(--mint);text-shadow:0 0 28px rgba(131,242,197,.65);z-index:1}.card-name{font-size:22px;font-weight:750;letter-spacing:.04em}.card-name:hover{color:var(--mint)}.card-sub{color:var(--muted);font:10px ui-monospace,monospace;margin-top:3px}.card-meta{display:flex;justify-content:space-between;gap:10px;border-top:1px solid var(--line);margin-top:17px;padding-top:12px;color:var(--muted);font:9px ui-monospace,monospace}
+section{padding:39px 0 65px}.section-head{display:flex;justify-content:space-between;align-items:end;gap:18px;margin-bottom:22px}.section-head h2{font-size:24px;letter-spacing:-.04em;margin:7px 0 0}.section-head small{color:var(--muted);font:9px ui-monospace,monospace;letter-spacing:.12em}.about{display:grid;grid-template-columns:1fr 1fr;gap:14px}.about-box{border:1px solid var(--line);padding:22px;background:var(--panel)}.about-box p{color:#afc0c2;font-size:13px;margin:0 0 12px}.about-box p:last-child{margin-bottom:0}.terminal{font:11px/2 ui-monospace,monospace;color:#b7c8d0}.terminal .green{color:var(--mint)}.terminal .dim{color:#657d88}.clockline{color:var(--mint);font-variant-numeric:tabular-nums}
+.directory-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}.tile{border:1px solid var(--line);background:var(--panel);padding:20px;min-height:166px;transition:.28s;position:relative;overflow:hidden;cursor:pointer;text-align:left;color:var(--text);width:100%}.tile:hover{transform:translateY(-5px);border-color:rgba(131,242,197,.62);background:rgba(18,36,43,.94)}.tile .tile-icon{font-size:22px;color:var(--mint)}.tile h3{font-size:14px;margin:14px 0 5px}.tile p{font-size:11px;color:var(--muted);margin:0}.tile .index{position:absolute;right:15px;top:14px;color:#587079;font:9px ui-monospace,monospace}.tile:after{content:"↗";position:absolute;right:17px;bottom:13px;color:var(--mint);opacity:.65}
+.contact-box{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}.contact-title{font-size:17px;font-weight:700}.muted{color:var(--muted)}footer{border-top:1px solid var(--line);padding:24px 0 35px;display:flex;justify-content:space-between;gap:14px;color:#71858b;font:9px ui-monospace,monospace;letter-spacing:.1em}.reveal{opacity:0;transform:translateY(18px);transition:opacity .7s,transform .7s}.reveal.visible{opacity:1;transform:none}
+#particleCanvas{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:4}.modal-backdrop{position:fixed;inset:0;background:rgba(2,7,12,.78);backdrop-filter:blur(10px);display:none;place-items:center;padding:18px;z-index:8}.modal-backdrop.open{display:grid;animation:fadeIn .2s ease}.modal{width:min(700px,100%);max-height:min(88vh,820px);overflow:auto;border:1px solid rgba(131,242,197,.42);background:linear-gradient(145deg,rgba(16,34,42,.99),rgba(7,13,22,.99));box-shadow:0 20px 90px rgba(0,0,0,.6),0 0 35px rgba(131,242,197,.1);padding:27px;position:relative}.modal.wide{width:min(850px,100%)}.modal-close{position:sticky;float:right;top:0;margin:-5px -5px 4px 12px;background:rgba(7,17,23,.85);border:1px solid var(--line);color:var(--mint);padding:6px 10px;cursor:pointer;z-index:2}.modal-tag{color:var(--mint);font:9px ui-monospace,monospace;letter-spacing:.18em}.modal h3{font-size:25px;line-height:1.2;margin:10px 0 8px}.modal p{color:#b1c1c3;font-size:12px}.modal-intro{max-width:650px}.ruleline{height:1px;background:var(--line);margin:19px 0}.tag-row{display:flex;flex-wrap:wrap;gap:7px;margin:12px 0}.tag{border:1px solid var(--line);padding:4px 8px;color:var(--mint);font:9px ui-monospace,monospace;letter-spacing:.06em}.info-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.info-cell{padding:12px;border:1px solid var(--line);background:rgba(4,13,19,.42)}.info-cell .k{color:var(--muted);font:9px ui-monospace,monospace;letter-spacing:.12em}.info-cell .v{font-size:12px;margin-top:4px}.server-panel{padding:17px;border:1px solid var(--line);background:rgba(4,13,19,.5);margin-top:13px}.server-panel h4{margin:0 0 10px;color:var(--mint);font:10px ui-monospace,monospace;letter-spacing:.14em}.connect-row{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:9px 0;border-top:1px solid rgba(131,242,197,.1)}.connect-row:first-of-type{border-top:0}.connect-row code{font-size:12px;color:var(--text);overflow-wrap:anywhere}.server-note{font-size:11px;color:var(--muted);margin-top:10px}.track-layout{display:grid;grid-template-columns:220px 1fr;gap:23px;align-items:center;margin:18px 0}.record-art{aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at center,#13252a 0 12%,#8bdcba 12.5% 13%,#172d32 13.5% 28%,#a6e8cb 28.5% 29%,#0a1119 29.5% 65%,#172b30 65.5% 68%,#070d12 68.5%);border:1px solid rgba(131,242,197,.35);display:grid;place-items:center;box-shadow:0 0 35px rgba(131,242,197,.12);position:relative}.record-art:after{content:"NO.0606";font:9px ui-monospace,monospace;letter-spacing:.15em;color:var(--mint);position:absolute;bottom:25px}.record-center{width:27px;height:27px;border-radius:50%;background:var(--mint);box-shadow:0 0 20px rgba(131,242,197,.5)}.track-title{font-size:21px;font-weight:750;line-height:1.25}.track-artist{font-size:12px;color:var(--muted);margin-top:6px}.track-count{font:9px ui-monospace,monospace;color:var(--mint);margin-bottom:8px}.track-controls{display:flex;gap:8px;flex-wrap:wrap;margin-top:17px}.track-list{display:grid;gap:6px;margin-top:17px}.track-item{width:100%;text-align:left;display:flex;align-items:center;gap:12px;padding:10px 12px;background:rgba(4,13,19,.4);border:1px solid rgba(131,242,197,.12);color:var(--text);cursor:pointer}.track-item.active{border-color:var(--mint);background:rgba(131,242,197,.08)}.track-item .num{font:10px ui-monospace,monospace;color:var(--mint);width:22px}.track-item small{display:block;color:var(--muted);font-size:10px}.track-item strong{font-size:11px}.game-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.game-card{padding:14px;border:1px solid var(--line);background:rgba(4,13,19,.42)}.game-card h4{margin:0 0 6px;font-size:13px}.game-card p{margin:0;font-size:11px}.game-card .game-type{color:var(--mint);font:9px ui-monospace,monospace;letter-spacing:.1em;margin-bottom:7px}.cp-file{border:1px solid var(--line);padding:20px;background:linear-gradient(135deg,rgba(131,242,197,.06),rgba(5,12,20,.4));margin-top:18px}.cp-file .classified{color:var(--pink);font:10px ui-monospace,monospace;letter-spacing:.18em}.cp-file .big{font:clamp(19px,4vw,28px) ui-monospace,monospace;letter-spacing:.08em;margin:15px 0}.contact-links{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin-top:15px}.contact-link{border:1px solid var(--line);padding:12px;background:rgba(4,13,19,.45);display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:11px}.contact-link button{background:none;border:1px solid var(--line);color:var(--mint);padding:5px 8px;cursor:pointer;font-size:9px}
+#topBtn{position:fixed;right:20px;bottom:20px;z-index:5;border:1px solid var(--line);background:#0c1b20;color:var(--mint);padding:9px 12px;cursor:pointer;opacity:0;pointer-events:none;transition:.2s}#topBtn.show{opacity:1;pointer-events:auto}#toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,18px);background:#102a2a;border:1px solid var(--mint);color:var(--mint);padding:8px 14px;font:10px ui-monospace,monospace;opacity:0;transition:.25s;z-index:12;pointer-events:none}#toast.show{opacity:1;transform:translate(-50%,0)}
+@media(max-width:900px){.directory-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.hero{gap:28px}.navlinks{gap:13px}}
+@media(max-width:680px){.shell{width:min(100% - 30px,1100px)}nav{height:67px}.navlinks a:nth-child(2){display:none}.status{font-size:0}.hero{grid-template-columns:1fr;padding:62px 0 45px;gap:30px;min-height:unset}.id-card{max-width:440px}.about{grid-template-columns:1fr}.section-head{align-items:start}.section-head small{display:none}.modal{padding:21px}.track-layout{grid-template-columns:1fr}.record-art{width:min(210px,70%);margin:auto}.game-list{grid-template-columns:1fr}}
+@media(max-width:420px){.directory-grid{grid-template-columns:1fr}.tile{min-height:135px}.info-grid,.contact-links{grid-template-columns:1fr}.card-meta{font-size:8px}.connect-row{align-items:flex-start;flex-direction:column}.connect-row .btn{width:100%}footer{flex-direction:column}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}}
 </style>
 </head>
 <body>
-<canvas id="stars"></canvas>
-
-<div class="site">
+<div id="stars" aria-hidden="true"></div>
+<div class="shell">
 <nav>
-  <a class="brand" href="#">NO.0606</a>
-  <div class="nav-links">
-    <a href="#about">ABOUT</a>
-    <a href="#obsessions">DIRECTORIES</a>
-    <a href="#contact">PING</a>
-  </div>
+  <a class="brand" href="#top"><span class="brand-mark"><span>✳</span></span><span>NO.0606</span></a>
+  <div class="navlinks"><a href="#about">ABOUT</a><a href="#directories">DIRECTORIES</a><a href="#contact">CONTACT</a></div>
+  <div class="status"><span class="dot"></span> SYSTEM ONLINE</div>
 </nav>
-
-<header class="hero">
-  <div class="reveal">
-    <div class="hero-tag"></div>
-    <div class="live-clock">
-      <span class="clock-dot"></span>
-      <span class="clock-label">LOCAL TIME</span>
-      <span class="clock-time" id="liveTime">00:00:00</span>
-    </div>
-    <h1>HELLO,<br><span class="glow">STRANGER.</span></h1>
-    <p class="lead">这里是互联网的一个野生角落。<br>没写什么正经介绍，我懒。随便逛逛吧，反正我也拦不住你。</p>
-    <div class="hero-actions">
-      <a class="btn" href="#about">ENTER THE SPACE ↘</a>
-      <a class="btn secondary" href="#obsessions">TAKE A LOOK</a>
-    </div>
-  </div>
-
-  <div class="identity-wrap reveal">
-    <div class="identity">
-      <div class="card-top"><span>PERSONAL NODE / 0606</span><span class="card-dot"></span></div>
-      <div class="avatar">M.</div>
-      <div class="card-name">
-        <span class="name-default">Mittanaht</span>
-        <span class="name-hover">WE DONT TALK ABOUT THIS</span>
-      </div>
-      <div class="card-sub">HUMAN. BUT WEIRD</div>
-      <div class="card-divider"></div>
-      <div class="card-meta">
-        <span>LOCATION: SOMEWHERE</span>
-        <span id="statusText">STATUS: CAFFEINATED</span>
-      </div>
-    </div>
-  </div>
-</header>
-
-<section id="about" class="reveal">
-  <div class="section-head">
-    <span class="section-no">01 — PROFILE</span>
-    <h2>关于我</h2>
-  </div>
-  <div class="about-grid">
-    <div class="panel about-box">
-      <p>哈喽，你可以叫我 <span class="glow"><b>Mittanaht</b></span>，或者 <span class="glow"><b>可仁</b></span>。</p>
-      <p>这里是个存放脑电波的野生角落。平时网瘾很大，重度冲浪选手，靠电影续命。</p>
-      <p>当然偶尔也会干点正经事：和数学题死磕，在钢琴上乱弹，随便画点东西，或者写点不知所云的碎碎念。</p>
-      <p>随便看看就好。</p>
-    </div>
-    <div class="terminal">
-      <div><span class="dim">visitor@my-space:~$</span> whoami</div>
-      <div class="green">Mittanaht / 老练的可仁</div>
-      <div style="margin-top:10px"><span class="dim">visitor@my-space:~$</span> echo "Lost in the midnight."</div>
-      <div class="green">Lost in the midnight.</div>
-      <div style="margin-top:10px"><span class="dim">visitor@my-space:~$</span> date</div>
-      <div id="dateOutput" class="green"></div>
-      <div style="margin-top:10px">
-        <span class="dim">visitor@my-space:~$</span>
-        <span class="green" id="terminalCursor">_</span><span id="terminalEasterEgg"></span>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="obsessions" class="reveal">
-  <div class="section-head">
-    <span class="section-no">02 — CURRENT OBSESSIONS</span>
-    <h2>最近在沉迷什么</h2>
-  </div>
-  <div class="directory-grid">
-    <article class="directory" data-folder="音乐">
-      <span class="index">DIR_01</span><span class="dir-arrow">↗</span>
-      <div class="dir-icon">♫</div>
-      <h3>音乐</h3>
-      <p>Jazz and some other things</p>
-    </article>
-    <article class="directory" data-folder="游戏">
-      <span class="index">DIR_02</span><span class="dir-arrow">↗</span>
-      <div class="dir-icon">⌁</div>
-      <h3>游戏</h3>
-      <p>Tour de Force</p>
-    </article>
-    <article class="directory" data-folder="电影">
-      <span class="index">DIR_03</span><span class="dir-arrow">↗</span>
-      <div class="dir-icon">▣</div>
-      <h3>电影</h3>
-      <p>Some birds aren't meant to be caged</p>
-    </article>
-    <article class="directory" data-folder="CP品味">
-      <span class="index">DIR_04</span><span class="dir-arrow">↗</span>
-      <div class="dir-icon">♡</div>
-      <h3>CP品味</h3>
-      <p>Some fictional relationships.</p>
-    </article>
-  </div>
-</section>
-
-<section id="contact" class="reveal">
-  <div class="section-head">
-    <span class="section-no">03 — TRANSMISSION</span>
-    <h2>联系我</h2>
-  </div>
-  <div class="transmission">
+<main id="top">
+  <div class="hero">
     <div>
-      <strong>信号已开放。</strong>
-      <p>但我不常在线，回复全看心情。</p>
+      <div class="eyebrow">A SMALL CORNER OF THE INTERNET</div>
+      <h1>HELLO,<br><span class="glow">STRANGER.</span></h1>
+      <p class="lead">这里是互联网的一个野生角落。没写什么正经介绍，我懒。随便逛逛吧，反正我也拦不住你。</p>
+      <div class="hero-actions"><a class="btn primary" href="#directories">ENTER THE SPACE ↗</a><a class="btn" href="#about">TAKE A LOOK ⌁</a></div>
     </div>
-    <button class="btn" id="helloBtn">PING ME ↗</button>
+    <aside class="id-card">
+      <div class="card-top"><span>PERSONAL NODE / 0606</span><span>● 01 / 01</span></div>
+      <div class="avatar"><div class="orbit"></div><div class="avatar-symbol">M.</div></div>
+      <div class="card-name" title="WE DONT TALK ABOUT THIS">Mittanaht</div>
+      <div class="card-sub">HUMAN. BUT WEIRD</div>
+      <div class="card-meta"><span>LOCATION: SOMEWHERE</span><span id="statusText">STATUS: CAFFEINATED</span></div>
+    </aside>
   </div>
-</section>
-
-<footer>
-  <span>© 2026 MITTANAHT</span>
-  <span>BUILT WITH PROCRASTINATION</span>
-</footer>
-</div>
-
-<!-- 普通目录弹窗 -->
-<div class="modal-backdrop" id="folderModal" aria-hidden="true">
-  <div class="modal" role="dialog" aria-modal="true">
-    <button class="modal-close" data-close="folderModal">✕</button>
-    <div class="modal-tag" id="folderTag">DIRECTORY / 02</div>
-    <h3 id="folderTitle">游戏</h3>
-    <p id="folderDesc"></p>
-    <div class="modal-hint" id="folderHint"></div>
-  </div>
-</div>
-
-<!-- 音乐播放器弹窗 -->
-<div class="modal-backdrop" id="musicModal" aria-hidden="true">
-  <div class="modal music-modal" role="dialog" aria-modal="true" aria-labelledby="musicTitle">
-    <button class="modal-close" data-close="musicModal">✕</button>
-    <div class="modal-tag">DIRECTORY / 01 — MUSIC ARCHIVE</div>
-    <h3 id="musicTitle">A LIFE WITH HEADPHONES ON.</h3>
-    <p class="music-intro">常年戴着耳机。<br>偏爱爵士（比如 Al Bowlly），也听点嘻哈说唱。<br>歌单乱七八糟，什么都听。</p>
-
-    <div class="music-player">
-      <div class="player-main">
-        <div class="album-art">
-          <span class="art-index" id="artIndex">TRACK / 01</span>
-          <div class="art-disc"><span></span></div>
-        </div>
-        <div class="player-info">
-          <div class="player-label">NOW SELECTED</div>
-          <div class="player-title" id="currentTitle">Dark Fantasy</div>
-          <div class="player-artist" id="currentArtist">Kanye West</div>
-          <div class="player-album">FROM MY PERSONAL ROTATION</div>
-          <div class="player-controls">
-            <button class="control-btn" id="prevTrack" aria-label="上一首">↶</button>
-            <button class="listen-btn" id="listenTrack">OPEN IN NETEASE ↗</button>
-            <button class="control-btn" id="nextTrack" aria-label="下一首">↷</button>
-          </div>
-          <div class="player-note">这里不直接播放音频。选中歌曲后，点击按钮即可前往网易云音乐。</div>
-        </div>
-      </div>
+  <section id="about" class="reveal">
+    <div class="section-head"><div><div class="eyebrow">01 — PROFILE</div><h2>关于我</h2></div><small>README / HUMAN.EXE</small></div>
+    <div class="about">
+      <div class="about-box"><p>哈喽，你可以叫我 Mittanaht，或者可仁。</p><p>这里是个存放脑电波的野生角落。平时网瘾很大，重度冲浪选手，靠电影续命。</p><p>当然偶尔也会干点正经事：和数学题死磕，在钢琴上乱弹，随便画点东西，或者写点不知所云的碎碎念。</p><p>随便看看就好。</p></div>
+      <div class="about-box terminal"><div><span class="dim">visitor@NO.0606:~$</span> whoami</div><div class="green">Mittanaht / 老练的可仁</div><div class="dim">Lost in the midnight.</div><div><span class="dim">visitor@NO.0606:~$</span> date</div><div id="clock" class="clockline">Loading local time...</div><div><span class="dim">visitor@NO.0606:~$</span> <span id="terminalEgg" class="green" style="cursor:pointer">_</span></div><div id="eggMessage" class="dim" aria-live="polite"></div></div>
     </div>
-
-    <div class="track-heading">
-      <span>FAVOURITE TRACKS</span>
-      <span id="trackCount">05 TRACKS</span>
+  </section>
+  <section id="directories" class="reveal">
+    <div class="section-head"><div><div class="eyebrow">02 — CURRENT OBSESSIONS</div><h2>最近在沉迷什么</h2></div><small>SELECT A DIRECTORY</small></div>
+    <div class="directory-grid">
+      <button class="tile" data-open="musicModal"><span class="index">DIR_01</span><div class="tile-icon">♫</div><h3>音乐品味</h3><p>Jazz and some other things.</p></button>
+      <button class="tile" data-open="gameModal"><span class="index">DIR_02</span><div class="tile-icon">⌘</div><h3>游戏</h3><p>A little bit of everything.</p></button>
+      <button class="tile" data-open="movieModal"><span class="index">DIR_03</span><div class="tile-icon">▣</div><h3>电影</h3><p>Some birds aren't meant to be caged.</p></button>
+      <button class="tile" data-open="cpModal"><span class="index">DIR_04</span><div class="tile-icon">♡</div><h3>CP品味</h3><p>Some fictional relationships.</p></button>
     </div>
-    <div class="track-list" id="trackList">
-      <button class="track active" data-track="0">
-        <span class="track-number">01</span>
-        <span><span class="track-name">Dark Fantasy</span><span class="track-artist">Kanye West</span></span>
-        <span class="track-state">SELECTED</span>
-      </button>
-      <button class="track" data-track="1">
-        <span class="track-number">02</span>
-        <span><span class="track-name">Midnight, The Stars and You</span><span class="track-artist">Ray Noble Orchestra / Al Bowlly</span></span>
-        <span class="track-state"></span>
-      </button>
-      <button class="track" data-track="2">
-        <span class="track-number">03</span>
-        <span><span class="track-name">Special to Me</span><span class="track-artist">Bobby Caldwell</span></span>
-        <span class="track-state"></span>
-      </button>
-      <button class="track" data-track="3">
-        <span class="track-number">04</span>
-        <span><span class="track-name">Friesenjung</span><span class="track-artist">Ski Aggu / Joost / Otto Waalkes</span></span>
-        <span class="track-state"></span>
-      </button>
-      <button class="track" data-track="4">
-        <span class="track-number">05</span>
-        <span><span class="track-name">Singin' In The Rain</span><span class="track-artist">Gene Kelly</span></span>
-        <span class="track-state"></span>
-      </button>
-    </div>
-
-    <a class="cloud-link" href="https://y.music.163.com/m/user?id=8955887292&amp;dlt=0846&amp;app_version=9.6.20" target="_blank" rel="noopener noreferrer">
-      <span>
-        <span class="cloud-label">NETEASE CLOUD MUSIC / MY PROFILE</span>
-        <span class="cloud-name">老练的可仁</span>
-      </span>
-      <span class="cloud-arrow">OPEN ↗</span>
-    </a>
-    <div class="modal-hint">A LITTLE COLLECTION OF SOUNDS I KEEP COMING BACK TO.</div>
-  </div>
+  </section>
+  <section id="contact" class="reveal">
+    <div class="section-head"><div><div class="eyebrow">03 — TRANSMISSION</div><h2>联系我</h2></div><small>OPEN CHANNEL</small></div>
+    <div class="about-box contact-box"><div><div class="contact-title">信号已开放。</div><p class="muted">但我不常在线，回复全看心情。</p></div><button class="btn primary" id="contactBtn">PING ME ↗</button></div>
+  </section>
+</main>
+<footer><span>© 2026 MITTANAHT</span><span>BUILT WITH PROCRASTINATION <span style="color:var(--mint)">✳</span></span></footer>
 </div>
+<canvas id="particleCanvas" aria-hidden="true"></canvas>
 
-<!-- CP品味弹窗 -->
-<div class="modal-backdrop" id="cpModal" aria-hidden="true">
-  <div class="modal cp-modal" role="dialog" aria-modal="true">
-    <button class="modal-close" data-close="cpModal">✕</button>
-    <div class="modal-tag">DIRECTORY / 04 — PERSONAL ARCHIVE</div>
-    <h3>CP品味</h3>
-    <p class="cp-subtitle">Some fictional relationships.</p>
-    <div class="cp-file">
-      <div class="cp-stamp">CLASSIFIED / PERSONAL INTERESTS</div>
-      <h4>RELATIONSHIP DATABASE</h4>
-      <p>一些虚构人物之间的关系，一些说不清楚的嗑点，以及一些本人拒绝解释的私人偏好。</p>
-      <div class="cp-bottom">
-        <span>CONTENT: UNDISCLOSED</span>
-        <span>STATUS: ONGOING</span>
-      </div>
-    </div>
-    <div class="modal-hint">VIEWER DISCRETION IS ADVISED. JUST KIDDING.</div>
-  </div>
+<!-- MUSIC ARCHIVE -->
+<div class="modal-backdrop" id="musicModal" aria-hidden="true"><div class="modal wide" role="dialog" aria-modal="true" aria-labelledby="musicTitle"><button class="modal-close" data-close>✕ CLOSE</button><div class="modal-tag">DIRECTORY / 01 — MUSIC ARCHIVE</div><h3 id="musicTitle">音乐品味</h3><p class="modal-intro">常年戴着耳机。偏爱爵士（比如 Al Bowlly），也听点嘻哈说唱。歌单乱七八糟，什么都听。</p><div class="ruleline"></div><div class="track-layout"><div class="record-art"><div class="record-center"></div></div><div><div id="trackCount" class="track-count">NOW SELECTED / 01</div><div id="trackTitle" class="track-title">Dark Fantasy</div><div id="trackArtist" class="track-artist">Kanye West</div><div class="track-controls"><button class="btn small" id="prevTrack">← PREVIOUS</button><button class="btn small" id="nextTrack">NEXT →</button><button class="btn small primary" id="openNetease">OPEN IN NETEASE ↗</button></div></div></div><div class="track-list" id="trackList"></div><div class="server-panel"><h4>NETEASE MUSIC / MY PROFILE</h4><p style="margin:0 0 10px">老练的可仁</p><a class="btn small" href="https://y.music.163.com/m/user?id=8955887292&amp;dlt=0846&amp;app_version=9.6.20" target="_blank" rel="noopener">OPEN MY PLAYLIST ↗</a></div><p class="server-note">这里负责展示曲目和跳转网易云，不直接在网页内播放音频。</p></div></div>
+
+<!-- GAME ARCHIVE -->
+<div class="modal-backdrop" id="gameModal" aria-hidden="true"><div class="modal wide" role="dialog" aria-modal="true" aria-labelledby="gameTitle"><button class="modal-close" data-close>✕ CLOSE</button><div class="modal-tag">DIRECTORY / 02 — GAME ARCHIVE</div><h3 id="gameTitle">游戏履历</h3><p class="modal-intro">涉猎很广，什么都玩。或者更准确地说，曾经什么都玩。</p><div class="tag-row"><span class="tag">VARIOUS GENRES</span><span class="tag">ON &amp; OFF</span><span class="tag">PERSONAL ARCHIVE</span></div><div class="game-list">
+  <div class="game-card"><div class="game-type">01 / MAIN GAME</div><h4>VALORANT · 无畏契约</h4><p>尚勃勒专精，也玩幽影和幻棱。游戏 ID：尚虫虫。</p></div>
+  <div class="game-card"><div class="game-type">02 / SANDBOX</div><h4>MINECRAFT · 我的世界</h4><p>生电玩家。自己开了一个公开生存服务器，服务器档案见下方。</p></div>
+  <div class="game-card"><div class="game-type">03 / INDIE</div><h4>UNDERTALE · 传说之下</h4><p>一款玩过的独立游戏。</p></div>
+  <div class="game-card"><div class="game-type">04 / STRATEGY</div><h4>KARDS</h4><p>我是戈林。我的意思是，我不会打。</p></div>
+  <div class="game-card"><div class="game-type">05 / WISHLIST</div><h4>DETROIT: BECOME HUMAN</h4><p>早就想玩了，可惜苹果电脑暂时玩不了。先放进愿望清单。</p></div>
 </div>
+<div class="ruleline"></div>
+<div class="server-panel"><div class="modal-tag">MINECRAFT / SERVER ARCHIVE</div><h3 style="margin-top:8px">午夜繁星服务器</h3><p style="margin-top:0">MITTANAHT'S SERVER · PUBLIC SERVER</p><p>从 2026 年 3 月开始运营。一个以生存为主的公开 Minecraft 服务器。</p><div class="tag-row"><span class="tag">JAVA × BEDROCK</span><span class="tag">PLUGIN SERVER</span><span class="tag">SURVIVAL</span><span class="tag">REDSTONE</span></div><div class="info-grid"><div class="info-cell"><div class="k">VERSION</div><div class="v">1.21 – 1.21.11</div></div><div class="info-cell"><div class="k">SERVER CORE</div><div class="v">1.21.10</div></div><div class="info-cell"><div class="k">BASE PACK</div><div class="v">基于 ZeroNight 整合包修改</div></div><div class="info-cell"><div class="k">GAMEPLAY</div><div class="v">生存为主</div></div></div><div class="server-panel"><h4>SERVER NOTES</h4><p style="margin:0">拥有插件与一个炫酷的出生点。服务器内有一些生电机器，大多数由服主亲自建造。Java 版与 Bedrock 版互通。</p><p class="server-note">不鼓励大型生电机器与外挂。建议低调发展红石，避免卡服。</p></div><div class="server-panel"><h4>CONNECTION / JAVA EDITION</h4><div class="connect-row"><code>play.simpfun.cn:22549</code><button class="btn small copy-btn" data-copy="play.simpfun.cn:22549">COPY ADDRESS</button></div><h4 style="margin-top:13px">CONNECTION / BEDROCK EDITION</h4><div class="connect-row"><code>play.simpfun.cn</code><button class="btn small copy-btn" data-copy="play.simpfun.cn">COPY ADDRESS</button></div><div class="server-note">PORT / 22549</div></div><div class="server-panel"><h4>BASIC RULES</h4><p style="margin:0">01 / QQ 群内名字改成你的游戏 ID。<br>02 / 使用木锄圈地。<br>03 / 圈地后输入 <code>/dom create [名字]</code> 创建领地。<br>04 / 传送使用 <code>/tpa</code>，前往领地使用 <code>/dom tp</code>。<br>05 / 禁止破坏他人建筑。<br>06 / 禁止伤害服务器的行为，尤其是恶意 TNT 轰炸。</p><p class="server-note">遇到恶意行为，可以用领地插件保护自己的建筑。有问题先看公告，再问群主，群主人还行。至少到现在还没把谁变成猪（？</p></div><div class="server-panel"><h4>QQ COMMUNITY</h4><div class="connect-row"><code>1083052624</code><button class="btn small copy-btn" data-copy="1083052624">COPY GROUP ID</button></div></div></div></div></div>
 
-<!-- 联系方式弹窗 -->
-<div class="modal-backdrop" id="contactModal" aria-hidden="true">
-  <div class="modal" role="dialog" aria-modal="true">
-    <button class="modal-close" data-close="contactModal">✕</button>
-    <div class="modal-tag">INCOMING CONNECTION</div>
-    <h3>PING ME</h3>
-    <p>信号已开放。至于什么时候回复——那就是另一个问题了。</p>
-    <div class="contact-list">
-      <div class="contact-row">
-        <div class="contact-info">
-          <span class="contact-platform">X / TWITTER</span>
-          <span class="contact-value">@JohnSmith_lldkr</span>
-        </div>
-        <a class="contact-action" href="https://x.com/JohnSmith_lldkr" target="_blank" rel="noopener noreferrer">OPEN ↗</a>
-      </div>
-      <div class="contact-row">
-        <div class="contact-info">
-          <span class="contact-platform">QQ</span>
-          <span class="contact-value">1779160433</span>
-        </div>
-        <button class="contact-action copy-btn" data-copy="1779160433">COPY</button>
-      </div>
-      <div class="contact-row">
-        <div class="contact-info">
-          <span class="contact-platform">DOUYIN / 抖音</span>
-          <span class="contact-value">老练的可仁</span>
-        </div>
-        <button class="contact-action copy-btn" data-copy="老练的可仁">COPY</button>
-      </div>
-    </div>
-    <div class="modal-hint">CONNECTION STATUS: ONLINE_ISH</div>
-  </div>
-</div>
+<!-- MOVIE PLACEHOLDER -->
+<div class="modal-backdrop" id="movieModal" aria-hidden="true"><div class="modal" role="dialog" aria-modal="true" aria-labelledby="movieTitle"><button class="modal-close" data-close>✕ CLOSE</button><div class="modal-tag">DIRECTORY / 03 — FILM ARCHIVE</div><h3 id="movieTitle">电影</h3><p>Some birds aren't meant to be caged.</p><div class="cp-file"><div class="classified">ARCHIVE STATUS / UNDER CONSTRUCTION</div><div class="big">COMING SOON_</div><p>这里以后放喜欢的电影、导演、台词，或者一些看完之后久久没缓过来的东西。</p></div></div></div>
 
-<button id="topBtn" aria-label="回到顶部">↑</button>
+<!-- CP ARCHIVE -->
+<div class="modal-backdrop" id="cpModal" aria-hidden="true"><div class="modal" role="dialog" aria-modal="true" aria-labelledby="cpTitle"><button class="modal-close" data-close>✕ CLOSE</button><div class="modal-tag">DIRECTORY / 04 — PERSONAL ARCHIVE</div><h3 id="cpTitle">CP品味</h3><p>Some fictional relationships.</p><div class="cp-file"><div class="classified">CLASSIFIED / PERSONAL INTERESTS</div><div class="big">RELATIONSHIP DATABASE</div><p>一些虚构人物之间的关系，一些说不清楚的嗑点，以及一些本人拒绝解释的私人偏好。</p><div class="ruleline"></div><div class="terminal"><div>CONTENT: UNDISCLOSED</div><div>STATUS: ONGOING</div><div style="color:var(--pink)">VIEWER DISCRETION IS ADVISED. JUST KIDDING.</div></div></div></div></div>
 
+<!-- CONTACT -->
+<div class="modal-backdrop" id="contactModal" aria-hidden="true"><div class="modal" role="dialog" aria-modal="true" aria-labelledby="contactTitle"><button class="modal-close" data-close>✕ CLOSE</button><div class="modal-tag">DIRECTORY / TRANSMISSION</div><h3 id="contactTitle">PING MITTANAHT</h3><p>信号已开放。至于什么时候回复——看缘分。</p><div class="contact-links"><div class="contact-link"><span>X / @JohnSmith_lldkr</span><a class="btn small" href="https://x.com/JohnSmith_lldkr" target="_blank" rel="noopener">OPEN ↗</a></div><div class="contact-link"><span>QQ / 1779160433</span><button data-copy="1779160433">COPY</button></div><div class="contact-link"><span>抖音 / 老练的可仁</span><button data-copy="老练的可仁">COPY</button></div></div></div></div>
+
+<button id="topBtn" aria-label="Back to top">↑ TOP</button><div id="toast" role="status" aria-live="polite">COPIED / SIGNAL RECEIVED ✳</div>
 <script>
-/* 实时时钟 */
-function updateClock(){
-  const now=new Date();
-  document.getElementById('liveTime').textContent=now.toLocaleTimeString('en-GB',{
-    hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false
-  });
-}
-updateClock();
-setInterval(updateClock,1000);
-
-/* 星空背景 */
-const canvas=document.getElementById('stars');
-const ctx=canvas.getContext('2d');
-let stars=[];
-function resizeStars(){
-  canvas.width=innerWidth*devicePixelRatio;
-  canvas.height=innerHeight*devicePixelRatio;
-  canvas.style.width=innerWidth+'px';
-  canvas.style.height=innerHeight+'px';
-  ctx.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);
-  stars=Array.from({length:Math.min(130,Math.floor(innerWidth/9))},()=>({
-    x:Math.random()*innerWidth,y:Math.random()*innerHeight,
-    r:Math.random()*1.3+.2,a:Math.random()*3,speed:Math.random()*.006+.002
-  }));
-}
-function drawStars(){
-  ctx.clearRect(0,0,innerWidth,innerHeight);
-  stars.forEach(s=>{
-    s.a+=s.speed;
-    const alpha=.25+Math.abs(Math.sin(s.a))*.55;
-    ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
-    ctx.fillStyle=`rgba(143,255,224,${alpha})`;ctx.fill();
-  });
-  requestAnimationFrame(drawStars);
-}
-addEventListener('resize',resizeStars);
-resizeStars();drawStars();
-
-/* 鼠标粒子拖尾和点击爆发 */
-const reducedMotion=matchMedia('(prefers-reduced-motion: reduce)').matches;
-const finePointer=matchMedia('(pointer:fine)').matches;
-function makeParticle(x,y,burst=false){
-  const p=document.createElement('i');
-  p.className='particle';
-  p.style.left=x+'px';p.style.top=y+'px';
-  const angle=Math.random()*Math.PI*2;
-  const distance=burst?Math.random()*85+20:Math.random()*20+5;
-  p.style.setProperty('--dx',Math.cos(angle)*distance+'px');
-  p.style.setProperty('--dy',Math.sin(angle)*distance+'px');
-  if(burst){const size=Math.random()*4+2;p.style.width=size+'px';p.style.height=size+'px'}
-  document.body.appendChild(p);
-  setTimeout(()=>p.remove(),750);
-}
-if(!reducedMotion&&finePointer){
-  let last=0;
-  addEventListener('mousemove',e=>{
-    if(Date.now()-last<22)return;
-    last=Date.now();makeParticle(e.clientX,e.clientY);
-  });
-  addEventListener('click',e=>{
-    for(let i=0;i<18;i++)makeParticle(e.clientX,e.clientY,true);
-  });
-}
-
-/* 身份卡状态轮换 */
-const statuses=['STATUS: CAFFEINATED','STATUS: OVERTHINKING','STATUS: ERROR'];
-let statusIndex=0;
-setInterval(()=>{
-  const el=document.getElementById('statusText');
-  el.style.opacity=0;
-  setTimeout(()=>{
-    statusIndex=(statusIndex+1)%statuses.length;
-    el.textContent=statuses[statusIndex];el.style.opacity=1;
-  },220);
-},3200);
-
-/* 终端日期与打字彩蛋 */
-document.getElementById('dateOutput').textContent=new Date().toDateString();
-setTimeout(()=>{
-  const cursor=document.getElementById('terminalCursor');
-  const output=document.getElementById('terminalEasterEgg');
-  cursor.style.animation='none';cursor.style.visibility='hidden';
-  const message='Error: Nothing to see here.';
-  let i=0;
-  const typer=setInterval(()=>{
-    output.textContent+=message[i++];
-    if(i>=message.length)clearInterval(typer);
-  },85);
-},4200);
-
-/* 通用弹窗 */
-function openModal(el){
-  el.classList.add('open');
-  el.setAttribute('aria-hidden','false');
-}
-function closeModal(el){
-  el.classList.remove('open');
-  el.setAttribute('aria-hidden','true');
-}
-document.querySelectorAll('[data-close]').forEach(btn=>{
-  btn.addEventListener('click',()=>{
-    closeModal(document.getElementById(btn.dataset.close));
-  });
-});
-document.querySelectorAll('.modal-backdrop').forEach(backdrop=>{
-  backdrop.addEventListener('click',e=>{
-    if(e.target===backdrop)closeModal(backdrop);
-  });
-});
-document.addEventListener('keydown',e=>{
-  if(e.key==='Escape'){
-    document.querySelectorAll('.modal-backdrop.open').forEach(closeModal);
-  }
-});
-
-/* 目录弹窗内容 */
-const folderInfo={
-  '游戏':{
-    tag:'DIRECTORY / 02',
-    desc:'游戏档案区已开启。这里可以放正在玩的游戏、游戏截图、成就和一些难忘的存档。',
-    hint:'GAME ARCHIVE OPENED.'
-  },
-  '电影':{
-    tag:'DIRECTORY / 03',
-    desc:'电影档案区已开启。这里可以放观影记录、片单、评分，以及那些看完还在脑子里转的故事。',
-    hint:'CINEMA ARCHIVE OPENED.'
-  }
-};
-const folderModal=document.getElementById('folderModal');
-const musicModal=document.getElementById('musicModal');
-const cpModal=document.getElementById('cpModal');
-
-document.querySelectorAll('.directory').forEach(card=>{
-  card.addEventListener('click',()=>{
-    const folder=card.dataset.folder;
-    if(folder==='音乐'){
-      openModal(musicModal);
-      return;
-    }
-    if(folder==='CP品味'){
-      openModal(cpModal);
-      return;
-    }
-    const info=folderInfo[folder];
-    document.getElementById('folderTag').textContent=info.tag;
-    document.getElementById('folderTitle').textContent=folder;
-    document.getElementById('folderDesc').textContent=info.desc;
-    document.getElementById('folderHint').textContent=info.hint;
-    openModal(folderModal);
-  });
-});
-
-/* 音乐曲目数据 */
+// Star field
+const stars=document.getElementById('stars');for(let i=0;i<82;i++){const s=document.createElement('i');s.className='star';s.style.left=Math.random()*100+'%';s.style.top=Math.random()*100+'%';s.style.animationDelay=(Math.random()*5)+'s';s.style.opacity=(.15+Math.random()*.6);stars.appendChild(s)}
+// Local clock and terminal easter egg
+const clock=document.getElementById('clock');function tick(){clock.textContent=new Intl.DateTimeFormat('zh-CN',{dateStyle:'medium',timeStyle:'medium'}).format(new Date())}tick();setInterval(tick,1000);
+let eggClicks=0;document.getElementById('terminalEgg').addEventListener('click',()=>{eggClicks++;document.getElementById('eggMessage').textContent=eggClicks<4?'_'.repeat(eggClicks)+' access denied': 'Error: Nothing to see here.'});
+// Rotating status
+const statuses=['STATUS: CAFFEINATED','STATUS: OVERTHINKING','STATUS: ERROR'];let statusIndex=0;setInterval(()=>{statusIndex=(statusIndex+1)%statuses.length;document.getElementById('statusText').textContent=statuses[statusIndex]},4200);
+// Reveal and top button
+const observer=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');observer.unobserve(e.target)}}),{threshold:.12});document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));const topBtn=document.getElementById('topBtn');addEventListener('scroll',()=>topBtn.classList.toggle('show',scrollY>450));topBtn.onclick=()=>scrollTo({top:0,behavior:'smooth'});
+// Toast + clipboard
+const toast=document.getElementById('toast');let toastTimer;function showToast(message='COPIED ✳'){toast.textContent=message;toast.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>toast.classList.remove('show'),1800)}async function copyText(value){try{await navigator.clipboard.writeText(value);showToast('COPIED ✳')}catch(e){const input=document.createElement('textarea');input.value=value;document.body.appendChild(input);input.select();try{document.execCommand('copy');showToast('COPIED ✳')}catch(err){showToast('COPY FAILED')}input.remove()}}
+document.querySelectorAll('[data-copy]').forEach(el=>el.addEventListener('click',()=>copyText(el.dataset.copy)));
+// Modals
+function openModal(id){const modal=document.getElementById(id);if(!modal)return;document.querySelectorAll('.modal-backdrop.open').forEach(m=>m.classList.remove('open'));modal.classList.add('open');modal.setAttribute('aria-hidden','false');document.body.style.overflow='hidden'}function closeModal(modal){modal.classList.remove('open');modal.setAttribute('aria-hidden','true');if(!document.querySelector('.modal-backdrop.open'))document.body.style.overflow=''}document.querySelectorAll('[data-open]').forEach(el=>el.addEventListener('click',()=>openModal(el.dataset.open)));document.querySelectorAll('[data-close]').forEach(el=>el.addEventListener('click',()=>closeModal(el.closest('.modal-backdrop'))));document.querySelectorAll('.modal-backdrop').forEach(m=>m.addEventListener('click',e=>{if(e.target===m)closeModal(m)}));addEventListener('keydown',e=>{if(e.key==='Escape')document.querySelectorAll('.modal-backdrop.open').forEach(closeModal)});document.getElementById('contactBtn').addEventListener('click',()=>openModal('contactModal'));
+// Music archive (links open on NetEase; no embedded audio playback)
 const tracks=[
-  {
-    title:'Dark Fantasy',
-    artist:'Kanye West',
-    url:'https://163cn.tv/bkDaHCtu'
-  },
-  {
-    title:'Midnight, The Stars and You',
-    artist:'Ray Noble Orchestra / Al Bowlly',
-    url:'https://163cn.tv/bkDaYxWA'
-  },
-  {
-    title:'Special to Me',
-    artist:'Bobby Caldwell',
-    url:'https://163cn.tv/bkDa5KAF'
-  },
-  {
-    title:'Friesenjung',
-    artist:'Ski Aggu / Joost / Otto Waalkes',
-    url:'https://163cn.tv/bkDat3le'
-  },
-  {
-    title:"Singin' In The Rain",
-    artist:'Gene Kelly',
-    url:'https://163cn.tv/bkDa6SCR'
-  }
-];
-let currentTrack=0;
-
-function selectTrack(index){
-  currentTrack=(index+tracks.length)%tracks.length;
-  const track=tracks[currentTrack];
-  document.getElementById('currentTitle').textContent=track.title;
-  document.getElementById('currentArtist').textContent=track.artist;
-  document.getElementById('artIndex').textContent='TRACK / '+String(currentTrack+1).padStart(2,'0');
-
-  document.querySelectorAll('.track').forEach((row,i)=>{
-    const active=i===currentTrack;
-    row.classList.toggle('active',active);
-    row.querySelector('.track-state').textContent=active?'SELECTED':'';
-  });
-}
-document.querySelectorAll('.track').forEach(row=>{
-  row.addEventListener('click',()=>{
-    selectTrack(Number(row.dataset.track));
-  });
-});
-document.getElementById('prevTrack').addEventListener('click',()=>{
-  selectTrack(currentTrack-1);
-});
-document.getElementById('nextTrack').addEventListener('click',()=>{
-  selectTrack(currentTrack+1);
-});
-document.getElementById('listenTrack').addEventListener('click',()=>{
-  window.open(tracks[currentTrack].url,'_blank','noopener,noreferrer');
-});
-selectTrack(0);
-
-/* 联系弹窗 */
-document.getElementById('helloBtn').addEventListener('click',()=>{
-  openModal(document.getElementById('contactModal'));
-});
-
-/* QQ 和抖音复制按钮 */
-document.querySelectorAll('.copy-btn').forEach(btn=>{
-  btn.addEventListener('click',async()=>{
-    const value=btn.dataset.copy;
-    try{
-      await navigator.clipboard.writeText(value);
-      btn.textContent='COPIED ✓';
-      btn.classList.add('copied');
-      setTimeout(()=>{
-        btn.textContent='COPY';
-        btn.classList.remove('copied');
-      },1600);
-    }catch(error){
-      btn.textContent='SELECT TEXT';
-      setTimeout(()=>btn.textContent='COPY',1600);
-    }
-  });
-});
-
-/* 滚动渐入 */
-const observer=new IntersectionObserver(entries=>{
-  entries.forEach(entry=>{
-    if(entry.isIntersecting){
-      entry.target.classList.add('visible');
-      observer.unobserve(entry.target);
-    }
-  });
-},{threshold:.12});
-document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
-
-/* 回到顶部 */
-const topBtn=document.getElementById('topBtn');
-addEventListener('scroll',()=>{
-  topBtn.classList.toggle('show',scrollY>450);
-});
-topBtn.addEventListener('click',()=>scrollTo({top:0,behavior:'smooth'}));
+ {title:'Dark Fantasy',artist:'Kanye West',url:'https://163cn.tv/bkDaHCtu'},
+ {title:'Midnight, The Stars and You',artist:'Ray Noble Orchestra / Al Bowlly',url:'https://163cn.tv/bkDaYxWA'},
+ {title:'Special to Me',artist:'Bobby Caldwell',url:'https://163cn.tv/bkDa5KAF'},
+ {title:'Friesenjung',artist:'Ski Aggu / Joost / Otto Waalkes',url:'https://163cn.tv/bkDat3le'},
+ {title:"Singin' In The Rain",artist:'Gene Kelly',url:'https://163cn.tv/bkDa6SCR'}
+];let currentTrack=0;const trackTitle=document.getElementById('trackTitle'),trackArtist=document.getElementById('trackArtist'),trackCount=document.getElementById('trackCount'),trackList=document.getElementById('trackList');function selectTrack(index){currentTrack=(index+tracks.length)%tracks.length;const t=tracks[currentTrack];trackTitle.textContent=t.title;trackArtist.textContent=t.artist;trackCount.textContent=`NOW SELECTED / ${String(currentTrack+1).padStart(2,'0')}`;trackList.querySelectorAll('.track-item').forEach((el,i)=>el.classList.toggle('active',i===currentTrack))}tracks.forEach((t,i)=>{const b=document.createElement('button');b.className='track-item';b.innerHTML=`<span class="num">${String(i+1).padStart(2,'0')}</span><span><strong></strong><small></small></span>`;b.querySelector('strong').textContent=t.title;b.querySelector('small').textContent=t.artist;b.addEventListener('click',()=>selectTrack(i));trackList.appendChild(b)});selectTrack(0);document.getElementById('prevTrack').onclick=()=>selectTrack(currentTrack-1);document.getElementById('nextTrack').onclick=()=>selectTrack(currentTrack+1);document.getElementById('openNetease').onclick=()=>window.open(tracks[currentTrack].url,'_blank','noopener,noreferrer');
+// Lightweight cursor particles; disabled for touch screens and reduced-motion users.
+(()=>{const canvas=document.getElementById('particleCanvas'),ctx=canvas.getContext('2d');if(matchMedia('(prefers-reduced-motion: reduce)').matches||matchMedia('(pointer: coarse)').matches)return;let w=0,h=0,dpr=1,particles=[],last=0;function resize(){dpr=Math.min(devicePixelRatio||1,2);w=innerWidth;h=innerHeight;canvas.width=w*dpr;canvas.height=h*dpr;canvas.style.width=w+'px';canvas.style.height=h+'px';ctx.setTransform(dpr,0,0,dpr,0,0)}resize();addEventListener('resize',resize);addEventListener('pointermove',e=>{const now=performance.now();if(now-last<14)return;last=now;for(let i=0;i<2;i++)particles.push({x:e.clientX+(Math.random()-.5)*5,y:e.clientY+(Math.random()-.5)*5,vx:(Math.random()-.5)*.7,vy:(Math.random()-.5)*.7,life:1,size:1+Math.random()*2});if(particles.length>140)particles.splice(0,particles.length-140)},{passive:true});addEventListener('pointerdown',e=>{for(let i=0;i<16;i++){const a=Math.random()*Math.PI*2,s=1+Math.random()*2.5;particles.push({x:e.clientX,y:e.clientY,vx:Math.cos(a)*s,vy:Math.sin(a)*s,life:1,size:1+Math.random()*2})}});function draw(){ctx.clearRect(0,0,w,h);particles=particles.filter(p=>p.life>.025);for(const p of particles){p.x+=p.vx;p.y+=p.vy;p.vx*=.985;p.vy*=.985;p.life-=.023;p.size*=.992;ctx.globalAlpha=Math.max(0,p.life)*.8;ctx.fillStyle='#83f2c5';ctx.shadowBlur=11;ctx.shadowColor='#83f2c5';ctx.beginPath();ctx.arc(p.x,p.y,p.size,0,Math.PI*2);ctx.fill()}ctx.globalAlpha=1;ctx.shadowBlur=0;requestAnimationFrame(draw)})();
 </script>
 </body>
 </html>
