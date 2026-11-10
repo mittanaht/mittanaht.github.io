@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -279,7 +280,7 @@ footer{
 .cloud-arrow{color:var(--mint);font:14px var(--mono)}
 
 /* CP品味档案 */
-.cp-modal{width:min(100%,620px)}
+.cp-modal{width:min(100%,760px)}
 .cp-subtitle{
   color:var(--mint);font:11px var(--mono);letter-spacing:.08em;
   margin:0 0 24px!important;
@@ -295,9 +296,52 @@ footer{
 }
 .cp-file h4{font:17px var(--mono);color:var(--text);margin:0 0 10px}
 .cp-file p{margin:0;color:var(--muted);font-size:12px;line-height:1.9}
+.cp-topline{
+  display:flex;align-items:center;justify-content:space-between;
+  gap:12px;flex-wrap:wrap;margin-bottom:20px;
+  font:9px var(--mono);color:var(--muted);letter-spacing:.1em;
+}
+.cp-status{color:var(--mint)}
+.cp-section{
+  border-top:1px solid var(--line);padding-top:20px;margin-top:22px;
+}
+.cp-section-head{
+  display:flex;align-items:baseline;justify-content:space-between;
+  gap:12px;flex-wrap:wrap;margin-bottom:14px;
+}
+.cp-section-head h4{
+  margin:0;color:var(--mint);font:11px var(--mono);
+  letter-spacing:.13em;
+}
+.cp-section-head span{font:9px var(--mono);color:var(--muted)}
+.cp-grid{
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;
+}
+.cp-entry{
+  padding:14px;border:1px solid rgba(143,255,224,.12);
+  background:rgba(4,13,19,.4);min-width:0;
+}
+.cp-entry strong{
+  display:block;font-size:13px;color:var(--text);
+  line-height:1.6;margin-bottom:5px;
+}
+.cp-entry p{font-size:11px;line-height:1.8;color:var(--muted)}
+.cp-entry.featured{border-color:rgba(255,142,184,.28)}
+.cp-entry.featured strong{color:var(--pink)}
+.cp-tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:12px}
+.cp-tags span{
+  border:1px solid var(--line);padding:5px 8px;
+  color:#b9cbca;font:9px var(--mono);letter-spacing:.04em;
+}
+.cp-note{
+  margin-top:16px;padding:13px 15px;
+  border-left:2px solid var(--pink);background:rgba(255,142,184,.045);
+  color:#b9c5c5;font-size:11px;line-height:1.9;
+}
 .cp-bottom{
   display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
-  margin-top:18px;font:9px var(--mono);color:var(--muted);
+  margin-top:22px;padding-top:15px;border-top:1px solid var(--line);
+  font:9px var(--mono);color:var(--muted);
 }
 
 /* 游戏档案弹窗 */
@@ -577,6 +621,10 @@ body.global-error-active .site{
   .listen-btn{padding:10px}
   .game-modal{padding:25px 19px}
   .game-modal .game-list{grid-template-columns:1fr}
+  .cp-modal{padding:25px 19px}
+}
+@media(max-width:560px){
+  .cp-grid{grid-template-columns:1fr}
 }
 @media(max-width:430px){
   .directory-grid{grid-template-columns:1fr}
@@ -935,20 +983,139 @@ body.global-error-active .site{
   </div>
 </div>
 
-<!-- CP品味弹窗 -->
+<!-- CP品味档案弹窗 -->
 <div class="modal-backdrop" id="cpModal" aria-hidden="true">
-  <div class="modal cp-modal" role="dialog" aria-modal="true">
+  <div class="modal cp-modal" role="dialog" aria-modal="true" aria-labelledby="cpTitle">
     <button class="modal-close" data-close="cpModal">✕</button>
     <div class="modal-tag">DIRECTORY / 04 — PERSONAL ARCHIVE</div>
-    <h3>CP品味</h3>
-    <p class="cp-subtitle">Some fictional relationships.</p>
+    <h3 id="cpTitle">CP品味</h3>
+    <p class="cp-subtitle">Some fictional relationships. Some questionable decisions.</p>
+
     <div class="cp-file">
       <div class="cp-stamp">CLASSIFIED / PERSONAL INTERESTS</div>
+      <div class="cp-topline">
+        <span>FILE NO. 0606-CP</span>
+        <span class="cp-status">STATUS: ACTIVE OBSESSION</span>
+      </div>
       <h4>RELATIONSHIP DATABASE</h4>
       <p>一些虚构人物之间的关系，一些说不清楚的嗑点，以及一些本人拒绝解释的私人偏好。</p>
+
+      <div class="cp-section">
+        <div class="cp-section-head">
+          <h4>01 / VALORANT</h4>
+          <span>MAIN UNIVERSE</span>
+        </div>
+        <div class="cp-grid">
+          <div class="cp-entry featured">
+            <strong>尚勃勒 × 蝰蛇</strong>
+            <p>成年人的拉扯很有意思，无差</p>
+            <div class="cp-tags"><span>CHAMBER</span><span>VIPER</span><span>FAVOURITE</span></div>
+          </div>
+          <div class="cp-entry featured">
+            <strong>幽影 × 贤者</strong>
+            <p>喜欢。</p>
+            <div class="cp-tags"><span>OMEN</span><span>SAGE</span></div>
+          </div>
+          <div class="cp-entry">
+            <strong>尚勃勒 × 夜露</strong>
+            <p>路过吃一口，无差。</p>
+            <div class="cp-tags"><span>CHAMBER</span><span>YORU</span></div>
+          </div>
+          <div class="cp-entry">
+            <strong>尚勃勒 × 不死鸟</strong>
+            <p>吵闹与优雅的组合，想想就挺热闹😁无差。</p>
+            <div class="cp-tags"><span>CHAMBER</span><span>PHOENIX</span></div>
+          </div>
+          <div class="cp-entry">
+            <strong>不死鸟 × 夜露</strong>
+            <p>这两位凑在一起也挺有趣，拌嘴氛围很足。无差。</p>
+            <div class="cp-tags"><span>PHOENIX</span><span>YORU</span></div>
+          </div>
+        </div>
+        <div class="cp-note">ps：我想看尚勃勒夜露和不死鸟这仨货的日常🥺还有幻棱海神还有钛狐的互动（老友记）
+        </div>
+      </div>
+
+      <div class="cp-section">
+        <div class="cp-section-head">
+          <h4>02 / OTHER FICTIONAL UNIVERSES</h4>
+          <span>CROSS-FANDOM FILES</span>
+        </div>
+        <div class="cp-grid">
+          <div class="cp-entry featured">
+            <strong>夏洛克·福尔摩斯 × 约翰·华生</strong>
+            <p>《神探夏洛克》福华99，无需多言。</p>
+            <div class="cp-tags"><span>SHERLOCK</span><span>JOHN WATSON</span></div>
+          </div>
+          <div class="cp-entry">
+            <strong>Jack Twist × Ennis Del Mar</strong>
+            <p>《断背山》这段关系带来的情绪后劲很难忽略😭</p>
+            <div class="cp-tags"><span>BROKEBACK MOUNTAIN</span></div>
+          </div>
+          <div class="cp-entry featured">
+            <strong>Anthoney × Elijah</strong>
+            <p>《我的幽灵室友》俄漫冷门cp。</p>
+            <div class="cp-tags"><span>MY STUDENT SPIRIT</span></div>
+          </div>
+          <div class="cp-entry">
+            <strong>Paul Allen × Patrick Bateman</strong>
+            <p>《美国精神病人》我觉得泡泡特别萌呀。</p>
+            <div class="cp-tags"><span>AMERICAN PSYCHO</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="cp-section">
+        <div class="cp-section-head">
+          <h4>03 / CHARACTER INTERESTS</h4>
+          <span>NOT A SHIP LIST</span>
+        </div>
+        <div class="cp-entry">
+          <strong>VALORANT</strong>
+          <p>尚勃勒、幽影、幻棱、不死鸟。</p>
+        </div>
+        <div class="cp-entry" style="margin-top:10px">
+          <strong>OTHER CHARACTERS</strong>
+          <p>保罗·艾伦、天马贤三、约翰李贝特、康纳、Vox、Lucifer、Gaster。</p>
+        </div>
+        <div class="cp-note">6767676767</div>
+      </div>
+
+      <div class="cp-section">
+        <div class="cp-section-head">
+          <h4>04 / PERSONAL TASTE</h4>
+          <span>USER PREFERENCES</span>
+        </div>
+        <div class="cp-entry">
+          <strong>关系类型偏好</strong>
+          <p>BL = BG ＞ GB ＞ GL</p>
+          <div class="cp-tags"><span>BL</span><span>BG</span><span>GB</span><span>GL：不吃</span></div>
+        </div>
+        <div class="cp-entry" style="margin-top:10px">
+          <strong>明确雷区⚠️</strong>
+          <p>Neon × Chamber（雷）</p>
+          <div class="cp-tags"><span>NOTP</span><span>DO NOT SHIP</span></div>
+        </div>
+        <div class="cp-note">杂食，但不是没有底线。</div>
+      </div>
+
+      <div class="cp-section">
+        <div class="cp-section-head">
+          <h4>05 / REAL-LIFE FRIENDSHIP</h4>
+          <span>NOT FICTIONAL SHIPPING</span>
+        </div>
+        <div class="cp-entry">
+          <strong>Benedict Cumberbatch &amp; Martin Freeman</strong>
+          <p>喜欢他们在现实中的友情与相处氛围。这里记录的是友情，不是 CP。</p>
+          <div class="cp-tags"><span>REAL PEOPLE</span><span>FRIENDSHIP</span><span>NO SHIPPING</span></div>
+        </div>
+        <div class="cp-note">备注：Martin Freeman 的婚姻状况不构成任何悲伤剧情😡</div>
+      </div>
+
       <div class="cp-bottom">
-        <span>CONTENT: UNDISCLOSED</span>
-        <span>STATUS: ONGOING</span>
+        <span>CONTENT: PERSONAL &amp; SUBJECTIVE</span>
+        <span>LAST UPDATED: 2026</span>
+        <span>ACCESS: PUBLIC, JUDGEMENT: DENIED</span>
       </div>
     </div>
     <div class="modal-hint">VIEWER DISCRETION IS ADVISED. JUST KIDDING.</div>
