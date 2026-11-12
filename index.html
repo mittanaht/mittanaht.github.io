@@ -414,28 +414,36 @@ footer{
 
 /* 隐藏终端 */
 #secretTerminal{
-  position:fixed;z-index:100;left:50%;bottom:32px;
+  position:fixed;z-index:100;left:50%;top:auto;bottom:32px;
   transform:translate(-50%,20px);
-  width:min(560px,calc(100vw - 32px));
+  width:min(560px,calc(100vw - 32px));height:auto;
+  min-width:280px;min-height:190px;max-width:calc(100vw - 16px);
+  max-height:calc(100vh - 16px);resize:both;overflow:auto;
   padding:17px 19px;
   background:rgba(5,12,17,.97);
   border:1px solid rgba(143,255,224,.4);
   box-shadow:0 0 35px rgba(0,0,0,.65),0 0 25px rgba(143,255,224,.08);
   font:11px/1.8 var(--mono);color:var(--text);
   opacity:0;visibility:hidden;pointer-events:none;
-  transition:opacity .2s,transform .2s,visibility .2s;
+  transition:opacity .2s,visibility .2s;
   backdrop-filter:blur(12px);
 }
 #secretTerminal.open{
   opacity:1;visibility:visible;pointer-events:auto;
   transform:translate(-50%,0);
 }
+#secretTerminal.maximized{resize:none;overflow:auto}
 .secret-terminal-top{
   display:flex;justify-content:space-between;align-items:center;
   padding-bottom:10px;margin-bottom:10px;
   border-bottom:1px solid var(--line);
   color:var(--muted);font-size:9px;letter-spacing:.12em;
+  cursor:grab;user-select:none;touch-action:none;
 }
+.secret-terminal-top:active{cursor:grabbing}
+.secret-terminal-top button{touch-action:auto}
+#secretOutput{min-height:34px}
+
 .secret-terminal-close{
   border:0;background:none;color:var(--muted);
   cursor:pointer;font:14px var(--mono);
@@ -476,11 +484,11 @@ footer{
   animation:rgbFlash .12s steps(2) infinite;
 }
 @keyframes terminalGlitch{
-  0%{transform:translate(calc(-50% - 3px),0)}
-  25%{transform:translate(calc(-50% + 3px),-2px)}
-  50%{transform:translate(calc(-50% - 2px),2px)}
-  75%{transform:translate(calc(-50% + 2px),0)}
-  100%{transform:translate(-50%,0)}
+  0%{transform:translate(-3px,0)}
+  25%{transform:translate(3px,-2px)}
+  50%{transform:translate(-2px,2px)}
+  75%{transform:translate(2px,0)}
+  100%{transform:translate(0,0)}
 }
 @keyframes rgbFlash{
   0%{text-shadow:-3px 0 red,3px 0 blue}
@@ -496,11 +504,11 @@ footer{
   color:#ff3434;text-shadow:0 0 8px red;
 }
 @keyframes controlShake{
-  0%{transform:translate(calc(-50% - 2px),1px)}
-  25%{transform:translate(calc(-50% + 2px),-1px)}
-  50%{transform:translate(calc(-50% - 1px),-2px)}
-  75%{transform:translate(calc(-50% + 1px),2px)}
-  100%{transform:translate(-50%,0)}
+  0%{transform:translate(-2px,1px)}
+  25%{transform:translate(2px,-1px)}
+  50%{transform:translate(-1px,-2px)}
+  75%{transform:translate(1px,2px)}
+  100%{transform:translate(0,0)}
 }
 #secretTerminal.fightclub-effect #secretOutput{
   color:var(--pink);text-shadow:0 0 9px rgba(255,142,184,.65);
@@ -636,7 +644,8 @@ body.global-error-active .site{
   .game-modal .info-grid{grid-template-columns:1fr}
   .game-modal .connect-row{align-items:flex-start;flex-direction:column}
   .game-modal .connect-row .btn{width:100%}
-  #secretTerminal{bottom:16px;padding:15px}
+  #secretTerminal{bottom:16px;padding:15px;min-width:260px}
+  #secretTerminal.maximized{left:8px!important;top:8px!important;width:calc(100vw - 16px)!important;height:calc(100vh - 16px)!important}
 }
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{scroll-behavior:auto!important;animation:none!important;transition:none!important}
@@ -1158,8 +1167,8 @@ body.global-error-active .site{
 
 <!-- 隐藏终端 -->
 <div id="secretTerminal" aria-hidden="true">
-  <div class="secret-terminal-top">
-    <span>UNKNOWN SESSION / NO.0606</span>
+  <div class="secret-terminal-top" id="secretTerminalBar" title="拖动移动 · 双击最大化 / 恢复">
+    <span>UNKNOWN SESSION / NO.0606 <span class="dim">— DRAG / DOUBLE-CLICK</span></span>
     <button class="secret-terminal-close" id="secretClose" aria-label="关闭终端">✕</button>
   </div>
   <div id="secretOutput" aria-live="polite"></div>
@@ -1409,6 +1418,7 @@ topBtn.addEventListener('click',()=>scrollTo({top:0,behavior:'smooth'}));
   const output=document.getElementById('secretOutput');
   const line=document.getElementById('secretLine');
   const closeBtn=document.getElementById('secretClose');
+  const titleBar=document.getElementById('secretTerminalBar');
   const footer=document.getElementById('secretFooter');
   const globalError=document.getElementById('globalError');
 
@@ -1419,6 +1429,9 @@ topBtn.addEventListener('click',()=>scrollTo({top:0,behavior:'smooth'}));
   let activeTimers=[];
   let konamiIndex=0;
   let errorGeneration=0;
+  let dragState=null;
+  let savedWindowRect=null;
+  let isMaximized=false;
 
   const konamiCode=[
     'ArrowUp','ArrowUp',
@@ -1748,7 +1761,96 @@ topBtn.addEventListener('click',()=>scrollTo({top:0,behavior:'smooth'}));
     input.focus();
   }
 
+  function resetTerminalGeometry(){
+    terminal.classList.remove('maximized');
+    terminal.style.left='';
+    terminal.style.top='';
+    terminal.style.right='';
+    terminal.style.bottom='';
+    terminal.style.width='';
+    terminal.style.height='';
+    terminal.style.maxWidth='';
+    terminal.style.maxHeight='';
+    terminal.style.transform='';
+    isMaximized=false;
+    savedWindowRect=null;
+  }
+
+  function toggleMaximize(){
+    if(!isOpen)return;
+    if(!isMaximized){
+      const rect=terminal.getBoundingClientRect();
+      savedWindowRect={left:rect.left,top:rect.top,width:rect.width,height:rect.height};
+      terminal.classList.add('maximized');
+      terminal.style.left='12px';
+      terminal.style.top='12px';
+      terminal.style.right='auto';
+      terminal.style.bottom='auto';
+      terminal.style.width='calc(100vw - 24px)';
+      terminal.style.height='calc(100vh - 24px)';
+      terminal.style.maxWidth='none';
+      terminal.style.maxHeight='none';
+      terminal.style.transform='none';
+      isMaximized=true;
+    }else{
+      const rect=savedWindowRect;
+      terminal.classList.remove('maximized');
+      if(rect){
+        const width=Math.min(rect.width,window.innerWidth-16);
+        const height=Math.min(rect.height,window.innerHeight-16);
+        const left=Math.max(8,Math.min(rect.left,window.innerWidth-width-8));
+        const top=Math.max(8,Math.min(rect.top,window.innerHeight-height-8));
+        terminal.style.left=left+'px';
+        terminal.style.top=top+'px';
+        terminal.style.right='auto';
+        terminal.style.bottom='auto';
+        terminal.style.width=width+'px';
+        terminal.style.height=height+'px';
+        terminal.style.maxWidth='calc(100vw - 16px)';
+        terminal.style.maxHeight='calc(100vh - 16px)';
+        terminal.style.transform='none';
+      }
+      isMaximized=false;
+      savedWindowRect=null;
+    }
+  }
+
+  titleBar.addEventListener('pointerdown',e=>{
+    if(e.button!==0||e.target.closest('#secretClose')||isMaximized)return;
+    const rect=terminal.getBoundingClientRect();
+    dragState={pointerId:e.pointerId,startX:e.clientX,startY:e.clientY,left:rect.left,top:rect.top,moved:false};
+    titleBar.setPointerCapture(e.pointerId);
+  });
+
+  titleBar.addEventListener('pointermove',e=>{
+    if(!dragState||dragState.pointerId!==e.pointerId)return;
+    const dx=e.clientX-dragState.startX;
+    const dy=e.clientY-dragState.startY;
+    if(Math.abs(dx)+Math.abs(dy)>3)dragState.moved=true;
+    if(!dragState.moved)return;
+    const rect=terminal.getBoundingClientRect();
+    const left=Math.max(8,Math.min(dragState.left+dx,window.innerWidth-rect.width-8));
+    const top=Math.max(8,Math.min(dragState.top+dy,window.innerHeight-rect.height-8));
+    terminal.style.left=left+'px';
+    terminal.style.top=top+'px';
+    terminal.style.right='auto';
+    terminal.style.bottom='auto';
+    terminal.style.transform='none';
+  });
+
+  function stopDragging(e){
+    if(dragState&&dragState.pointerId===e.pointerId)dragState=null;
+  }
+  titleBar.addEventListener('pointerup',stopDragging);
+  titleBar.addEventListener('pointercancel',stopDragging);
+  titleBar.addEventListener('dblclick',e=>{
+    if(e.target.closest('#secretClose'))return;
+    e.preventDefault();
+    toggleMaximize();
+  });
+
   function openSecretTerminal(){
+    resetTerminalGeometry();
     isOpen=true;
     isBusy=true;
     clickCount=0;
@@ -1786,6 +1888,7 @@ topBtn.addEventListener('click',()=>scrollTo({top:0,behavior:'smooth'}));
       'fightclub-effect','sins-effect','error-effect'
     );
     terminal.setAttribute('aria-hidden','true');
+    resetTerminalGeometry();
     line.classList.remove('ready');
     input.disabled=true;
     input.value='';
@@ -1923,9 +2026,10 @@ topBtn.addEventListener('click',()=>scrollTo({top:0,behavior:'smooth'}));
     }
   }
 
-  /* 任意位置连续点击三次 */
+  /* 仅统计主页面点击；弹窗、终端和交互控件不参与三击计数 */
   document.addEventListener('click',e=>{
     if(isOpen)return;
+    if(e.target.closest('.modal-backdrop,#secretTerminal,button,a,input,textarea,select,label'))return;
 
     const now=Date.now();
     if(now-lastClick>850)clickCount=0;
